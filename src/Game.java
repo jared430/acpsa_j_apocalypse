@@ -8,6 +8,7 @@ public class Game {
   private int timesGet;
   private int timesAvoid;
   
+  // main class 
   public Game() {
 
     grid = new Grid(10, 20);
