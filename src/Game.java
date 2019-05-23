@@ -1,5 +1,7 @@
 public class Game {
 
+  // "APOCALYPSE OF THE DAMNED" created by MADISON VELEZ, AHMED DIABY, AND JARED CID
+
   private Grid grid;
   private int userRow;
   private int msElapsed;
@@ -8,7 +10,7 @@ public class Game {
   
   public Game() {
 
-    grid = new Grid(5, 10);
+    grid = new Grid(10, 20);
     userRow = 0;
     msElapsed = 0;
     timesGet = 0;
@@ -60,6 +62,7 @@ public class Game {
   }
     
   public static void main(String[] args) {
+
 
     Game game = new Game();
     
