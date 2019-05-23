@@ -34,7 +34,7 @@ public class Game {
   }
   
   public void handleKeyPress(){
-
+    int key = grid.checkLastKeyPressed();
   }
   
   public void populateRightEdge(){
