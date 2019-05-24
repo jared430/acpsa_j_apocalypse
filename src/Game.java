@@ -1,15 +1,22 @@
 public class Game {
 
+  // "APOCALYPSE OF THE DAMNED" created by MADISON VELEZ, AHMED DIABY, AND JARED CID
+
   private Grid grid;
   private int userRow;
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
   
+  // main class 
   public Game() {
 
     grid = new Grid(10, 20);
+<<<<<<< HEAD
     userRow = grid.getNumRows()/2;
+=======
+    userRow = 0;
+>>>>>>> bd63adb50724aa1cc2da4122036cf8729cd0d2f4
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -32,7 +39,7 @@ public class Game {
   }
   
   public void handleKeyPress(){
-
+    int key = grid.checkLastKeyPressed();
   }
   
   public void populateRightEdge(){
@@ -58,8 +65,18 @@ public class Game {
   public boolean isGameOver() {
     return false;
   }
+  public void setUserRow(){
+    int rowLength=grid.getNumRows();
+    if(userRow>rowLength){
+      userRow=rowLength-1;
+    }
+    if(userRow<0){
+      userRow=0;
+    }
+  }
     
   public static void main(String[] args) {
+
 
     Game game = new Game();
     
