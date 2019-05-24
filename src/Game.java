@@ -8,8 +8,8 @@ public class Game {
   
   public Game() {
 
-    grid = new Grid(5, 10);
-    userRow = 0;
+    grid = new Grid(10, 20);
+    userRow = grid.getNumRows()/2;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
