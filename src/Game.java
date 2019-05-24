@@ -13,7 +13,7 @@ public class Game {
   public Game() {
 
     grid = new Grid(10, 20);
-    userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
+    userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -35,15 +35,21 @@ public class Game {
     }
   }
   
-  public void handleKeyPress(){
+  public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
   }
+
+  public void setUserRow() {
+    if (userRow < 0){
+      userRow = 0;
+    }
+  }
   
-  public void populateRightEdge(){
+  public void populateRightEdge() {
 
   }
   
-  public void scrollLeft(){
+  public void scrollLeft() {
 
   }
   
