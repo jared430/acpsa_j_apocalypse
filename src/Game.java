@@ -11,7 +11,6 @@ public class Game {
   // MAIN CLASS
   
   public Game() {
-
     grid = new Grid(10, 20);
     userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS
     msElapsed = 0;
@@ -22,7 +21,6 @@ public class Game {
   }
   
   public void play() {
-
     while (!isGameOver()) {
       grid.pause(100);  // MODIFY GAME SPEED
       handleKeyPress();
@@ -40,8 +38,11 @@ public class Game {
   }
 
   public void setUserRow() {
+    int rowNum=grid.getNumRows();
     if (userRow < 0){
       userRow = 0;
+    } else if(userRow>rowNum) {
+    userRow = rowNum - 1;
     }
   }
   
