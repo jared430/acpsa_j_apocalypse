@@ -34,7 +34,8 @@ public class Game {
   
   public void handleKeyPress(){
     int key = grid.checkLastKeyPressed();
-    //if(key == 38 && )
+    if(key == 38 && grid.getCol() != 0 )
+    
     
 
   }
