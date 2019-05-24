@@ -9,7 +9,7 @@ public class Game {
   // main class 
   public Game() {
 
-    grid = new Grid(5, 10);
+    grid = new Grid(10, 20);
     userRow = 0;
     msElapsed = 0;
     timesGet = 0;
@@ -33,6 +33,9 @@ public class Game {
   }
   
   public void handleKeyPress(){
+    int key = grid.checkLastKeyPressed();
+    //if(key == 38 && )
+    
 
   }
   
