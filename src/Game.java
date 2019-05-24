@@ -8,11 +8,12 @@ public class Game {
   private int timesGet;
   private int timesAvoid;
   
-  // main class 
+  // MAIN CLASS
+  
   public Game() {
 
     grid = new Grid(10, 20);
-    userRow = 0;
+    userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -23,14 +24,14 @@ public class Game {
   public void play() {
 
     while (!isGameOver()) {
-      grid.pause(100);
+      grid.pause(100);  // MODIFY GAME SPEED
       handleKeyPress();
-      if (msElapsed % 300 == 0) {
+      if (msElapsed % 300 == 0) { // YOU CAN MOVE THREE TIMES AND THE OBJECT MOVES ONCE EVERY THREE TENTHS OF A SECOND
         scrollLeft();
         populateRightEdge();
       }
-      updateTitle();
-      msElapsed += 100;
+      updateTitle();  // SCORE, HEALTH, ETC
+      msElapsed += 100; // KEEP TRACK OF GAME TIMING
     }
   }
   
