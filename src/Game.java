@@ -4,15 +4,19 @@ public class Game {
 
   private Grid grid;
   private int userRow;
+  private int userCol;
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
+  private WavPlayer backgroundMusic;
+  private String player;
   
   // MAIN CLASS
   
   public Game() {
     grid = new Grid(10, 20);
-    userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS
+    userRow = grid.getNumRows() / 2;
+    userCol = 0;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -22,27 +26,42 @@ public class Game {
   
   public void play() {
     while (!isGameOver()) {
-      grid.pause(100);  // MODIFY GAME SPEED
+      grid.pause(100);
       handleKeyPress();
-      if (msElapsed % 300 == 0) { // YOU CAN MOVE THREE TIMES AND THE OBJECT MOVES ONCE EVERY THREE TENTHS OF A SECOND
+      if (msElapsed % 300 == 0) {
         scrollLeft();
         populateRightEdge();
       }
-      updateTitle();  // SCORE, HEALTH, ETC
-      msElapsed += 100; // KEEP TRACK OF GAME TIMING
+      updateTitle();
+      msElapsed += 100;
     }
   }
   
   public void handleKeyPress() {
-    // SET A KEY TO MOVE THE PLAYER UP... W KEY
-    // IF I PUSH DOWN ARROW THE PLAYER GOES DOWN... A KEY
-    // PSEUDOCODE
-    // CHANGE THE FIELD FOR USER ROW
-    // TO MAKE THE PICTURE MOVE, SHIFT THE USER PICTURE IN THE ARRAY
-    int key = grid.checkLastKeyPressed(); // YOU CAN DO DIFFERENT THINGS WHEN CHECKING
-
+    int key = grid.checkLastKeyPressed();
+    Location loc;
+    Location oldLoc;
+    Location oldLoc2;
     System.out.println(key);
-    
+    if (key == 87){ // UP
+      userRow--;
+      loc = new Location(userRow, 0);
+      grid.setImage(loc, "user.gif");
+      oldLoc = new Location(userRow + 1, 0);
+      grid.setImage(oldLoc, null);
+    } else if (key == 83){  // DOWN
+      userRow++;
+      loc = new Location(userRow, 0);
+      grid.setImage(loc, "user.gif");
+      oldLoc = new Location(userRow - 1, 0);
+      grid.setImage(oldLoc, null);
+    } else if (key == 68){  // RIGHT
+      loc = new Location(userRow, userCol);
+      //loc.getCol() - 1;
+      grid.setImage(loc, "user.gif");
+      oldLoc2 = new Location(userRow, userCol - 1);
+      grid.setImage(oldLoc2, null);
+    }
   }
 
   public void battleIntegration() {
@@ -50,11 +69,11 @@ public class Game {
   }
 
   public void setUserRow() {
-    int rowNum= grid.getNumRows();
+    int rowNum = grid.getNumRows();
     if (userRow < 0){
       userRow = 0;
-    } else if(userRow>rowNum) {
-    userRow = rowNum - 1;
+    } else if(userRow > rowNum) {
+      userRow = rowNum - 1;
     }
   }
   
@@ -70,6 +89,10 @@ public class Game {
 
   }
   
+  public int getHealth() {
+    return 0;
+  }
+
   public int getScore() {
     return 0;
   }
@@ -83,10 +106,7 @@ public class Game {
   }
     
   public static void main(String[] args) {
-
-
     Game game = new Game();
-    
     game.play();
   }
 }
