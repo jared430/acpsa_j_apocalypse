@@ -34,11 +34,23 @@ public class Game {
   }
   
   public void handleKeyPress() {
-    int key = grid.checkLastKeyPressed();
+    // SET A KEY TO MOVE THE PLAYER UP... W KEY
+    // IF I PUSH DOWN ARROW THE PLAYER GOES DOWN... A KEY
+    // PSEUDOCODE
+    // CHANGE THE FIELD FOR USER ROW
+    // TO MAKE THE PICTURE MOVE, SHIFT THE USER PICTURE IN THE ARRAY
+    int key = grid.checkLastKeyPressed(); // YOU CAN DO DIFFERENT THINGS WHEN CHECKING
+
+    System.out.println(key);
+    
+  }
+
+  public void battleIntegration() {
+
   }
 
   public void setUserRow() {
-    int rowNum=grid.getNumRows();
+    int rowNum = grid.getNumRows();
     if (userRow < 0){
       userRow = 0;
     } else if(userRow>rowNum) {
