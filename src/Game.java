@@ -50,7 +50,7 @@ public class Game {
   }
 
   public void setUserRow() {
-    int rowNum = grid.getNumRows();
+    int rowNum= grid.getNumRows();
     if (userRow < 0){
       userRow = 0;
     } else if(userRow>rowNum) {
