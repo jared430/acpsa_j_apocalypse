@@ -1,16 +1,19 @@
 public class Game {
 
+  // "APOCALYPSE OF THE DAMNED" created by MADISON VELEZ, AHMED DIABY, AND JARED CID
+
   private Grid grid;
   private int userRow;
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
   
-  // main class 
+  // MAIN CLASS
+  
   public Game() {
 
     grid = new Grid(10, 20);
-    userRow = 0;
+    userRow = 3;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -19,34 +22,63 @@ public class Game {
   }
   
   public void play() {
-
     while (!isGameOver()) {
-      grid.pause(100);
+      grid.pause(100);  // MODIFY GAME SPEED
       handleKeyPress();
-      if (msElapsed % 300 == 0) {
+      if (msElapsed % 300 == 0) { // YOU CAN MOVE THREE TIMES AND THE OBJECT MOVES ONCE EVERY THREE TENTHS OF A SECOND
         scrollLeft();
         populateRightEdge();
       }
-      updateTitle();
-      msElapsed += 100;
+      updateTitle();  // SCORE, HEALTH, ETC
+      msElapsed += 100; // KEEP TRACK OF GAME TIMING
     }
   }
   
-  public void handleKeyPress(){
+  public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
+    //check for out of bounds
     
+    if(key == 38 )
+    {
+      if(userRow <= 0){
+        return;
+      }
+      userRow--;
+      Location loc = new Location(userRow, 0);
+      grid.setImage(loc, "user.gif");
 
+      Location oldLoc = new Location(userRow+1, 0);
+      grid.setImage(oldLoc, null);
     }
+    else if(key == 40)
+    {
+    if(userRow >= 10){
+      return;
+    }
+      userRow++;
+      Location loc = new Location(userRow, 0);
+      grid.setImage(loc, "user.gif");
 
-    
+      Location oldLoc = new Location(userRow-1, 0);
+      grid.setImage(oldLoc, null);
+    }
+  }
+
+  /*public void setUserRow() {
+    int rowNum=grid.getNumRows();
+    if (userRow < 0){
+      userRow = 0;
+    } else if(userRow>rowNum) {
+    userRow = rowNum - 1;
+    }
+  }
+  */
+  
+  public void populateRightEdge() {
 
   }
   
-  public void populateRightEdge(){
-
-  }
-  
-  public void scrollLeft(){
+  public void scrollLeft() {
 
   }
   
@@ -67,6 +99,7 @@ public class Game {
   }
     
   public static void main(String[] args) {
+
 
     Game game = new Game();
     
