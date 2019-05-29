@@ -10,18 +10,23 @@ public class Game {
   private int timesAvoid;
   private WavPlayer backgroundMusic;
   private String player;
+  private int rowLength;
+  private int colLength;
   
   // MAIN CLASS
   
   public Game() {
+    
     grid = new Grid(10, 20);
-    userRow = grid.getNumRows() / 2;
+    rowLength=grid.getNumRows();
+    colLength=grid.getNumCols();
+    userRow = rowLength/ 2;
     userCol = 0;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
     updateTitle();
-    grid.setImage(new Location(userRow, 0), "user.gif");
+    grid.setImage(new Location(userRow, userCol), "user.gif");
   }
   
   public void play() {
@@ -41,28 +46,58 @@ public class Game {
     int key = grid.checkLastKeyPressed();
     Location loc;
     Location oldLoc;
-    Location oldLoc2;
     System.out.println(key);
-    if (key == 87){ // UP
-      userRow--;
-      loc = new Location(userRow, 0);
-      grid.setImage(loc, "user.gif");
-      oldLoc = new Location(userRow + 1, 0);
-      grid.setImage(oldLoc, null);
-    } else if (key == 83){  // DOWN
-      userRow++;
-      loc = new Location(userRow, 0);
-      grid.setImage(loc, "user.gif");
+    if(key == 38 )
+   {
+     if(userRow <= 0){
+       return;
+     }
+     userRow--;
+      loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+
+     oldLoc = new Location(userRow + 1, userCol);
+     grid.setImage(oldLoc, null);
+   }
+   else if(key == 40)
+   {
+   if(userRow >= 9){
+     return;
+   }
+     userRow++;
+     loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+
       oldLoc = new Location(userRow - 1, userCol);
-      grid.setImage(oldLoc, null);
-    } else if (key == 68){  // RIGHT
-      userCol--;
-      loc = new Location(0, userCol);
-      grid.setImage(loc, "user.gif");
-      oldLoc = new Location(userCol + 1, userRow);
-      grid.setImage(oldLoc, null);
-    }
-  }
+     grid.setImage(oldLoc, null);
+   }
+   else if(key == 37)
+   {
+     if(userCol <= 0)
+     {
+       return;
+     }
+     userCol--;
+      loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+
+      oldLoc = new Location(userRow, userCol+1);
+     grid.setImage(oldLoc, null);
+   }
+   else if(key == 39)
+   {
+     if(userCol >= colLength - 1){
+       return;
+     }
+     userCol++;
+      loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+
+      oldLoc = new Location(userRow, userCol - 1);
+     grid.setImage(oldLoc, null);
+   }
+ }
+  
 
   public void battleIntegration() {
 
@@ -77,10 +112,10 @@ public class Game {
       userRow = rowNum - 1;
     }
     if(userCol<0){
-      userCol=0;
+      userCol = 0;
     }
-    else if(userCol>colNum){
-     userCol=colNum-1;
+    else if(userCol > colNum){
+     userCol = colNum - 1;
     }
   }
   
