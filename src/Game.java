@@ -53,14 +53,14 @@ public class Game {
       userRow++;
       loc = new Location(userRow, 0);
       grid.setImage(loc, "user.gif");
-      oldLoc = new Location(userRow - 1, 0);
+      oldLoc = new Location(userRow - 1, userCol);
       grid.setImage(oldLoc, null);
     } else if (key == 68){  // RIGHT
-      loc = new Location(userRow, userCol);
-      //loc.getCol() - 1;
+      userCol--;
+      loc = new Location(0, userCol);
       grid.setImage(loc, "user.gif");
-      oldLoc2 = new Location(userRow, userCol - 1);
-      grid.setImage(oldLoc2, null);
+      oldLoc = new Location(userCol + 1, userRow);
+      grid.setImage(oldLoc, null);
     }
   }
 
@@ -68,12 +68,19 @@ public class Game {
 
   }
 
-  public void setUserRow() {
+  public void setUserLocation() {
     int rowNum = grid.getNumRows();
+    int colNum=grid.getNumCols();
     if (userRow < 0){
       userRow = 0;
     } else if(userRow > rowNum) {
       userRow = rowNum - 1;
+    }
+    if(userCol<0){
+      userCol=0;
+    }
+    else if(userCol>colNum){
+     userCol=colNum-1;
     }
   }
   
