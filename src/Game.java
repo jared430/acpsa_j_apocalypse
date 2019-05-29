@@ -7,6 +7,7 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
+  private int userCol;
   
   // MAIN CLASS
   
@@ -14,11 +15,12 @@ public class Game {
 
     grid = new Grid(10, 20);
     userRow = 3;
+    userCol = 5;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
     updateTitle();
-    grid.setImage(new Location(userRow, 0), "user.gif");
+    grid.setImage(new Location(userRow, userCol), "user.gif");
   }
   
   public void play() {
@@ -44,10 +46,10 @@ public class Game {
         return;
       }
       userRow--;
-      Location loc = new Location(userRow, 0);
+      Location loc = new Location(userRow, userCol);
       grid.setImage(loc, "user.gif");
 
-      Location oldLoc = new Location(userRow+1, 0);
+      Location oldLoc = new Location(userRow+1, userCol);
       grid.setImage(oldLoc, null);
     }
     else if(key == 40)
@@ -56,10 +58,35 @@ public class Game {
       return;
     }
       userRow++;
-      Location loc = new Location(userRow, 0);
+      Location loc = new Location(userRow, userCol);
       grid.setImage(loc, "user.gif");
 
-      Location oldLoc = new Location(userRow-1, 0);
+      Location oldLoc = new Location(userRow-1, userCol);
+      grid.setImage(oldLoc, null);
+    }
+    else if(key == 37)
+    {
+      if(userCol <= 0)
+      {
+        return;
+      }
+      userCol--;
+      Location loc = new Location(userRow, userCol);
+      grid.setImage(loc, "user.gif");
+
+      Location oldLoc = new Location(userRow, userCol+1);
+      grid.setImage(oldLoc, null);
+    }
+    else if(key == 39)
+    {
+      if(userCol >= 20){
+        return;
+      }
+      userCol++;
+      Location loc = new Location(userRow, userCol);
+      grid.setImage(loc, "user.gif");
+
+      Location oldLoc = new Location(userRow, userCol-1);
       grid.setImage(oldLoc, null);
     }
   }
