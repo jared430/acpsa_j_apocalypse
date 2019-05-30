@@ -4,10 +4,10 @@ public class Game {
 
   private Grid grid;
   private int userRow;
+  private int userCol;
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
-  private int userCol;
   
   // MAIN CLASS
   
@@ -25,14 +25,14 @@ public class Game {
   
   public void play() {
     while (!isGameOver()) {
-      grid.pause(100);  // MODIFY GAME SPEED
+      grid.pause(100);
       handleKeyPress();
-      if (msElapsed % 300 == 0) { // YOU CAN MOVE THREE TIMES AND THE OBJECT MOVES ONCE EVERY THREE TENTHS OF A SECOND
+      if (msElapsed % 300 == 0) {
         scrollLeft();
         populateRightEdge();
       }
-      updateTitle();  // SCORE, HEALTH, ETC
-      msElapsed += 100; // KEEP TRACK OF GAME TIMING
+      updateTitle();
+      msElapsed += 100;
     }
   }
   
@@ -54,7 +54,7 @@ public class Game {
     }
     else if(key == 40)
     {
-    if(userRow >= 10){
+    if(userRow >= 9){
       return;
     }
       userRow++;
@@ -79,7 +79,7 @@ public class Game {
     }
     else if(key == 39)
     {
-      if(userCol >= 20){
+      if(userCol >= 19){
         return;
       }
       userCol++;
@@ -95,8 +95,8 @@ public class Game {
     int rowNum=grid.getNumRows();
     if (userRow < 0){
       userRow = 0;
-    } else if(userRow>rowNum) {
-    userRow = rowNum - 1;
+    } else if(userRow > rowNum) {
+      userRow = rowNum - 1;
     }
   }
   */
@@ -113,6 +113,10 @@ public class Game {
 
   }
   
+  public int getHealth() {
+    return 0;
+  }
+
   public int getScore() {
     return 0;
   }
@@ -126,10 +130,7 @@ public class Game {
   }
     
   public static void main(String[] args) {
-
-
     Game game = new Game();
-    
     game.play();
   }
 }
