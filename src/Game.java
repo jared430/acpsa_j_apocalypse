@@ -17,9 +17,9 @@ public class Game {
   
   public Game() {
     grid = new Grid(10, 20);
-    rowLength=grid.getNumRows();
-    colLength=grid.getNumCols();
-    userRow = rowLength/ 2;
+    rowLength = grid.getNumRows();
+    colLength = grid.getNumCols();
+    userRow = rowLength / 2;
     userCol = 0;
     msElapsed = 0;
     timesGet = 0;
@@ -44,7 +44,7 @@ public class Game {
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
-    if(key == 38) {
+    if(key == 38 || key == 87) {  // UP
      if(userRow <= 0) {
        return;
      }
@@ -53,7 +53,7 @@ public class Game {
      grid.setImage(loc, "user.gif");
      Location oldLoc = new Location(userRow + 1, userCol);
      grid.setImage(oldLoc, null);
-    } else if(key == 40) {
+    } else if(key == 40 || key == 83) { // DOWN
       if(userRow >= 9) {
         return;
       }
@@ -62,7 +62,7 @@ public class Game {
      grid.setImage(loc, "user.gif");
      Location oldLoc = new Location(userRow - 1, userCol);
      grid.setImage(oldLoc, null);
-    } else if(key == 37) {
+    } else if(key == 37 || key == 65) { // LEFT
      if(userCol <= 0) {
        return;
       }
@@ -71,7 +71,7 @@ public class Game {
      grid.setImage(loc, "user.gif");
      Location oldLoc = new Location(userRow, userCol + 1);
      grid.setImage(oldLoc, null);
-    } else if(key == 39) {
+    } else if(key == 39 || key == 68) { // RIGHT
      if(userCol >= 19){
        return;
      }
