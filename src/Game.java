@@ -16,7 +16,6 @@ public class Game {
   // MAIN CLASS
   
   public Game() {
-    
     grid = new Grid(10, 20);
     rowLength=grid.getNumRows();
     colLength=grid.getNumCols();
@@ -44,60 +43,45 @@ public class Game {
   
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
-    Location loc;
-    Location oldLoc;
     System.out.println(key);
-    if(key == 38 )
-   {
-     if(userRow <= 0){
+    if(key == 38) {
+     if(userRow <= 0) {
        return;
      }
      userRow--;
-      loc = new Location(userRow, userCol);
+     Location loc = new Location(userRow, userCol);
      grid.setImage(loc, "user.gif");
-
-     oldLoc = new Location(userRow + 1, userCol);
+     Location oldLoc = new Location(userRow + 1, userCol);
      grid.setImage(oldLoc, null);
-   }
-   else if(key == 40)
-   {
-   if(userRow >= 9){
-     return;
-   }
+    } else if(key == 40) {
+      if(userRow >= 9) {
+        return;
+      }
      userRow++;
-     loc = new Location(userRow, userCol);
+     Location loc = new Location(userRow, userCol);
      grid.setImage(loc, "user.gif");
-
-      oldLoc = new Location(userRow - 1, userCol);
+     Location oldLoc = new Location(userRow - 1, userCol);
      grid.setImage(oldLoc, null);
-   }
-   else if(key == 37)
-   {
-     if(userCol <= 0)
-     {
+    } else if(key == 37) {
+     if(userCol <= 0) {
        return;
-     }
+      }
      userCol--;
-      loc = new Location(userRow, userCol);
+     Location loc = new Location(userRow, userCol);
      grid.setImage(loc, "user.gif");
-
-      oldLoc = new Location(userRow, userCol+1);
+     Location oldLoc = new Location(userRow, userCol + 1);
      grid.setImage(oldLoc, null);
-   }
-   else if(key == 39)
-   {
-     if(userCol >= colLength - 1){
+    } else if(key == 39) {
+     if(userCol >= 19){
        return;
      }
      userCol++;
-      loc = new Location(userRow, userCol);
+     Location loc = new Location(userRow, userCol);
      grid.setImage(loc, "user.gif");
-
-      oldLoc = new Location(userRow, userCol - 1);
+     Location oldLoc = new Location(userRow, userCol - 1);
      grid.setImage(oldLoc, null);
-   }
+    }
  }
-  
 
   public void battleIntegration() {
 
@@ -106,15 +90,14 @@ public class Game {
   public void setUserLocation() {
     int rowNum = grid.getNumRows();
     int colNum=grid.getNumCols();
-    if (userRow < 0){
+    if (userRow < 0) {
       userRow = 0;
     } else if(userRow > rowNum) {
       userRow = rowNum - 1;
     }
-    if(userCol<0){
+    if(userCol < 0) {
       userCol = 0;
-    }
-    else if(userCol > colNum){
+    } else if(userCol > colNum) {
      userCol = colNum - 1;
     }
   }
