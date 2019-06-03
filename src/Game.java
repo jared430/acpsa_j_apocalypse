@@ -8,8 +8,13 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
+<<<<<<< HEAD
   private String player = "images\\jeremyHeere.gif";
   private String zPic ="images\\zombie1.gif";
+=======
+  private int health;
+  private String zPic ="avoid.gif";
+>>>>>>> 7cbce34455839051053769d111e246910fa5ad00
   private WavPlayer backgroundMusic;
   private int rowLength;
   private int colLength;
@@ -18,14 +23,15 @@ public class Game {
   
   public Game() {
     grid = new Grid(10, 20);
-    userRow = 3;
-    userCol = 5;
+    userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
+    userCol=0;
     rowLength = grid.getNumRows();
     colLength = grid.getNumCols();
     userRow = rowLength / 2;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
+    health=2;
     updateTitle();
     grid.setImage(new Location(userRow, userCol), player);
   }
@@ -89,8 +95,6 @@ public class Game {
 
   }
 
-  
-  
   public void populateRightEdge() {
     for(int i = 0; i < 1; i++){
       int place = (int)(Math.random()*grid.getNumRows());
@@ -115,8 +119,14 @@ public class Game {
     }
   }
   
-  public void handleCollision(Location loc) {
-
+  public void handleCollision(Location zLoc) {
+    if(zLoc.equals(new Location(userRow+1,userCol))||
+    zLoc.equals(new Location(userRow-1,userCol))||
+    zLoc.equals(new Location(userRow,userCol+1))||
+    zLoc.equals(new Location(userRow,userCol-1))){
+      health--;
+    }
+  
   }
 
   public int getTime() {
@@ -137,6 +147,15 @@ public class Game {
   
   public boolean isGameOver() {
     return false;
+  }
+  public void setUserRow(){
+    int rowLength=grid.getNumRows();
+    if(userRow>rowLength){
+      userRow=rowLength-1;
+    }
+    else if(userRow<0){
+      userRow=0;
+    }
   }
     
   public static void main(String[] args) {
