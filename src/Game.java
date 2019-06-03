@@ -4,37 +4,37 @@ public class Game {
 
   private Grid grid;
   private int userRow;
+  private int userCol;
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
+  private int health;
+  // MAIN CLASS
   
-  // main class 
   public Game() {
 
     grid = new Grid(10, 20);
-<<<<<<< HEAD
-    userRow = grid.getNumRows()/2;
-=======
-    userRow = 0;
->>>>>>> bd63adb50724aa1cc2da4122036cf8729cd0d2f4
+    userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
+    userCol=0;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
+    health=2;
     updateTitle();
-    grid.setImage(new Location(userRow, 0), "user.gif");
+    grid.setImage(new Location(userRow, userCol), "user.gif");
   }
   
   public void play() {
 
     while (!isGameOver()) {
-      grid.pause(100);
+      grid.pause(100);  // MODIFY GAME SPEED
       handleKeyPress();
-      if (msElapsed % 300 == 0) {
+      if (msElapsed % 300 == 0) { // YOU CAN MOVE THREE TIMES AND THE OBJECT MOVES ONCE EVERY THREE TENTHS OF A SECOND
         scrollLeft();
         populateRightEdge();
       }
-      updateTitle();
-      msElapsed += 100;
+      updateTitle();  // SCORE, HEALTH, ETC
+      msElapsed += 100; // KEEP TRACK OF GAME TIMING
     }
   }
   
@@ -43,15 +43,23 @@ public class Game {
   }
   
   public void populateRightEdge(){
-
+   
   }
   
   public void scrollLeft(){
 
+
+
   }
   
-  public void handleCollision(Location loc) {
-
+  public void handleCollision(Location zLoc) {
+    if(zLoc.equals(new Location(userRow+1,userCol))||
+    zLoc.equals(new Location(userRow-1,userCol))||
+    zLoc.equals(new Location(userRow,userCol+1))||
+    zLoc.equals(new Location(userRow,userCol-1))){
+      health--;
+    }
+  
   }
   
   public int getScore() {
@@ -70,7 +78,7 @@ public class Game {
     if(userRow>rowLength){
       userRow=rowLength-1;
     }
-    if(userRow<0){
+    else if(userRow<0){
       userRow=0;
     }
   }
