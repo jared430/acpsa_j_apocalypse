@@ -72,7 +72,7 @@ public class Game {
      Location oldLoc = new Location(userRow, userCol + 1);
      grid.setImage(oldLoc, null);
     } else if(key == 39 || key == 68) { // RIGHT
-     if(userCol >= 19){
+     if(userCol >= 19) {
        return;
      }
      userCol++;
@@ -89,7 +89,7 @@ public class Game {
 
   public void setUserLocation() {
     int rowNum = grid.getNumRows();
-    int colNum=grid.getNumCols();
+    int colNum = grid.getNumCols();
     if (userRow < 0) {
       userRow = 0;
     } else if(userRow > rowNum) {
@@ -103,7 +103,7 @@ public class Game {
   }
   
   public void populateRightEdge() {
-
+    
   }
   
   public void scrollLeft() {
@@ -113,9 +113,13 @@ public class Game {
   public void handleCollision(Location loc) {
 
   }
+
+  public int getTime() {
+    return 160;
+  }
   
   public int getHealth() {
-    return 0;
+    return 100;
   }
 
   public int getScore() {
@@ -123,7 +127,7 @@ public class Game {
   }
   
   public void updateTitle() {
-    grid.setTitle("Game:  " + getScore());
+    grid.setTitle("Game:  " + getScore() + " Health:  " + getHealth() + " Time:  " + getTime());
   }
   
   public boolean isGameOver() {
