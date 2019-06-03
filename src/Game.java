@@ -9,6 +9,10 @@ public class Game {
   private int timesGet;
   private int timesAvoid;
   private String zPic ="avoid.gif";
+  private WavPlayer backgroundMusic;
+  private String player;
+  private int rowLength;
+  private int colLength;
   
   // MAIN CLASS
   
@@ -17,6 +21,9 @@ public class Game {
     grid = new Grid(10, 20);
     userRow = 3;
     userCol = 5;
+    rowLength = grid.getNumRows();
+    colLength = grid.getNumCols();
+    userRow = rowLength / 2;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -39,57 +46,48 @@ public class Game {
   
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
-    //check for out of bounds
-    
-    if(key == 38 )
-    {
-      if(userRow <= 0){
+    System.out.println(key);
+    if(key == 38 || key == 87) {  // UP
+     if(userRow <= 0) {
+       return;
+     }
+     userRow--;
+     Location loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+     Location oldLoc = new Location(userRow + 1, userCol);
+     grid.setImage(oldLoc, null);
+    } else if(key == 40 || key == 83) { // DOWN
+      if(userRow >= 9) {
         return;
       }
-      userRow--;
-      Location loc = new Location(userRow, userCol);
-      grid.setImage(loc, "user.gif");
-
-      Location oldLoc = new Location(userRow+1, userCol);
-      grid.setImage(oldLoc, null);
-    }
-    else if(key == 40)
-    {
-    if(userRow >= 9){
-      return;
-    }
-      userRow++;
-      Location loc = new Location(userRow, userCol);
-      grid.setImage(loc, "user.gif");
-
-      Location oldLoc = new Location(userRow-1, userCol);
-      grid.setImage(oldLoc, null);
-    }
-    else if(key == 37)
-    {
-      if(userCol <= 0)
-      {
-        return;
+     userRow++;
+     Location loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+     Location oldLoc = new Location(userRow - 1, userCol);
+     grid.setImage(oldLoc, null);
+    } else if(key == 37 || key == 65) { // LEFT
+     if(userCol <= 0) {
+       return;
       }
-      userCol--;
-      Location loc = new Location(userRow, userCol);
-      grid.setImage(loc, "user.gif");
-
-      Location oldLoc = new Location(userRow, userCol+1);
-      grid.setImage(oldLoc, null);
+     userCol--;
+     Location loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+     Location oldLoc = new Location(userRow, userCol + 1);
+     grid.setImage(oldLoc, null);
+    } else if(key == 39 || key == 68) { // RIGHT
+     if(userCol >= 19) {
+       return;
+     }
+     userCol++;
+     Location loc = new Location(userRow, userCol);
+     grid.setImage(loc, "user.gif");
+     Location oldLoc = new Location(userRow, userCol - 1);
+     grid.setImage(oldLoc, null);
     }
-    else if(key == 39)
-    {
-      if(userCol >= 19){
-        return;
-      }
-      userCol++;
-      Location loc = new Location(userRow, userCol);
-      grid.setImage(loc, "user.gif");
+ }
 
-      Location oldLoc = new Location(userRow, userCol-1);
-      grid.setImage(oldLoc, null);
-    }
+  public void battleIntegration() {
+
   }
 
   
@@ -121,9 +119,13 @@ public class Game {
   public void handleCollision(Location loc) {
 
   }
+
+  public int getTime() {
+    return 160;
+  }
   
   public int getHealth() {
-    return 0;
+    return 100;
   }
 
   public int getScore() {
@@ -131,7 +133,7 @@ public class Game {
   }
   
   public void updateTitle() {
-    grid.setTitle("Game:  " + getScore());
+    grid.setTitle("Game:  " + getScore() + " Health:  " + getHealth() + " Time:  " + getTime());
   }
   
   public boolean isGameOver() {
