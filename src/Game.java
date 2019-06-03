@@ -8,16 +8,15 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
-  private String zPic ="avoid.gif";
+  private String player = "images\\jeremyHeere.gif";
+  private String zPic ="images\\zombie1.gif";
   private WavPlayer backgroundMusic;
-  private String player;
   private int rowLength;
   private int colLength;
   
   // MAIN CLASS
   
   public Game() {
-
     grid = new Grid(10, 20);
     userRow = 3;
     userCol = 5;
@@ -28,7 +27,7 @@ public class Game {
     timesGet = 0;
     timesAvoid = 0;
     updateTitle();
-    grid.setImage(new Location(userRow, userCol), "user.gif");
+    grid.setImage(new Location(userRow, userCol), player);
   }
   
   public void play() {
@@ -53,7 +52,7 @@ public class Game {
      }
      userRow--;
      Location loc = new Location(userRow, userCol);
-     grid.setImage(loc, "user.gif");
+     grid.setImage(loc, player);
      Location oldLoc = new Location(userRow + 1, userCol);
      grid.setImage(oldLoc, null);
     } else if(key == 40 || key == 83) { // DOWN
@@ -62,7 +61,7 @@ public class Game {
       }
      userRow++;
      Location loc = new Location(userRow, userCol);
-     grid.setImage(loc, "user.gif");
+     grid.setImage(loc, player);
      Location oldLoc = new Location(userRow - 1, userCol);
      grid.setImage(oldLoc, null);
     } else if(key == 37 || key == 65) { // LEFT
@@ -71,7 +70,7 @@ public class Game {
       }
      userCol--;
      Location loc = new Location(userRow, userCol);
-     grid.setImage(loc, "user.gif");
+     grid.setImage(loc, player);
      Location oldLoc = new Location(userRow, userCol + 1);
      grid.setImage(oldLoc, null);
     } else if(key == 39 || key == 68) { // RIGHT
@@ -80,7 +79,7 @@ public class Game {
      }
      userCol++;
      Location loc = new Location(userRow, userCol);
-     grid.setImage(loc, "user.gif");
+     grid.setImage(loc, player);
      Location oldLoc = new Location(userRow, userCol - 1);
      grid.setImage(oldLoc, null);
     }
@@ -93,7 +92,7 @@ public class Game {
   
   
   public void populateRightEdge() {
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 1; i++){
       int place = (int)(Math.random()*grid.getNumRows());
       Location loc = new Location(place,grid.getNumCols()-1);
       grid.setImage(loc, zPic);
@@ -104,13 +103,13 @@ public class Game {
     
    for(int i = 0; i < grid.getNumRows(); i++){
       for(int j = 0; j < grid.getNumCols(); j++){
-        Location loc = new Location(i,j);
+        Location loc = new Location(i, j);
 
         if( zPic.equals(grid.getImage(loc))){
-         // Location enemyLoc = new Location(i, j -1);
-      //grid.setImage(enemyLoc, zPic);
-      //Location oldLoc = new Location(i,j);
-      //grid.setImage(oldLoc, null);
+          Location enemyLoc = new Location(i, j -1);
+          grid.setImage(enemyLoc, zPic);
+          Location oldLoc = new Location(i,j);
+          grid.setImage(oldLoc, null);
        }
       }
     }
