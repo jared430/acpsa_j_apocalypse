@@ -8,6 +8,7 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
+  private String zPic ="avoid.gif";
   
   // MAIN CLASS
   
@@ -91,22 +92,30 @@ public class Game {
     }
   }
 
-  /*public void setUserRow() {
-    int rowNum=grid.getNumRows();
-    if (userRow < 0){
-      userRow = 0;
-    } else if(userRow > rowNum) {
-      userRow = rowNum - 1;
-    }
-  }
-  */
+  
   
   public void populateRightEdge() {
-
+    for(int i = 0; i < 3; i++){
+      int place = (int)(Math.random()*grid.getNumRows());
+      Location loc = new Location(place,grid.getNumCols()-1);
+      grid.setImage(loc, zPic);
+    }
   }
   
   public void scrollLeft() {
+    
+   for(int i = 0; i < grid.getNumRows(); i++){
+      for(int j = 0; j < grid.getNumCols(); j++){
+        Location loc = new Location(i,j);
 
+        if( zPic.equals(grid.getImage(loc))){
+         // Location enemyLoc = new Location(i, j -1);
+      //grid.setImage(enemyLoc, zPic);
+      //Location oldLoc = new Location(i,j);
+      //grid.setImage(oldLoc, null);
+       }
+      }
+    }
   }
   
   public void handleCollision(Location loc) {
