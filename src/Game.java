@@ -8,13 +8,9 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
-<<<<<<< HEAD
   private String player = "images\\jeremyHeere.gif";
-  private String zPic ="images\\zombie1.gif";
-=======
+  private String zPic ="images\\zombie2.gif";
   private int health;
-  private String zPic ="avoid.gif";
->>>>>>> 7cbce34455839051053769d111e246910fa5ad00
   private WavPlayer backgroundMusic;
   private int rowLength;
   private int colLength;
@@ -24,15 +20,17 @@ public class Game {
   public Game() {
     grid = new Grid(10, 20);
     userRow = grid.getNumRows()/2;  // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
-    userCol=0;
+    userCol = 0;
     rowLength = grid.getNumRows();
     colLength = grid.getNumCols();
     userRow = rowLength / 2;
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
-    health=2;
+    health = 2;
     updateTitle();
+    grid.setBackground("images\\mainBackground.png");
+    grid.setMovableBackground("images\\mainBackground.png", 0, 0, 1.0, 1.0);
     grid.setImage(new Location(userRow, userCol), player);
   }
   
@@ -97,22 +95,20 @@ public class Game {
 
   public void populateRightEdge() {
     for(int i = 0; i < 1; i++){
-      int place = (int)(Math.random()*grid.getNumRows());
-      Location loc = new Location(place,grid.getNumCols()-1);
+      int place = (int)(Math.random() * grid.getNumRows());
+      Location loc = new Location(place, grid.getNumCols() - 1);
       grid.setImage(loc, zPic);
     }
   }
   
   public void scrollLeft() {
-    
    for(int i = 0; i < grid.getNumRows(); i++){
       for(int j = 0; j < grid.getNumCols(); j++){
         Location loc = new Location(i, j);
-
         if( zPic.equals(grid.getImage(loc))){
-          Location enemyLoc = new Location(i, j -1);
+          Location enemyLoc = new Location(i, j - 1);
           grid.setImage(enemyLoc, zPic);
-          Location oldLoc = new Location(i,j);
+          Location oldLoc = new Location(i, j);
           grid.setImage(oldLoc, null);
        }
       }
@@ -123,10 +119,9 @@ public class Game {
     if(zLoc.equals(new Location(userRow+1,userCol))||
     zLoc.equals(new Location(userRow-1,userCol))||
     zLoc.equals(new Location(userRow,userCol+1))||
-    zLoc.equals(new Location(userRow,userCol-1))){
+    zLoc.equals(new Location(userRow,userCol-1))) {
       health--;
     }
-  
   }
 
   public int getTime() {
@@ -149,12 +144,12 @@ public class Game {
     return false;
   }
   public void setUserRow(){
-    int rowLength=grid.getNumRows();
-    if(userRow>rowLength){
-      userRow=rowLength-1;
+    int rowLength = grid.getNumRows();
+    if(userRow > rowLength){
+      userRow = rowLength - 1;
     }
-    else if(userRow<0){
-      userRow=0;
+    else if(userRow < 0){
+      userRow = 0;
     }
   }
     
