@@ -14,7 +14,7 @@ public class Game {
   private int health;
   private String player = "images\\jeremyHeere.gif";
   private String zPic ="images\\zombie2.gif";
-  private String[] zombies;
+  private String[] zombies = {"images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif"};
   private int time;
   
   // MAIN CLASS
@@ -99,6 +99,10 @@ public class Game {
   public void populateRightEdge() {
       int place = 3 + (int)(Math.random() * (grid.getNumRows() - 3));
       Location loc = new Location(place, grid.getNumCols() - 1);
+
+
+      zPic = zombies[(int) (Math.random() * zombies.length)];
+
       grid.setImage(loc, zPic);
   }
   
