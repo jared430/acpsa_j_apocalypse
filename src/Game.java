@@ -5,15 +5,17 @@ public class Game {
   private Grid grid;
   private int userRow;
   private int userCol;
+  private int rowLength;
+  private int colLength;
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
+  private WavPlayer backgroundMusic;
+  private int health;
   private String player = "images\\jeremyHeere.gif";
   private String zPic ="images\\zombie2.gif";
-  private int health;
-  private WavPlayer backgroundMusic;
-  private int rowLength;
-  private int colLength;
+  private String[] zombies;
+  private int time;
   
   // MAIN CLASS
   
@@ -27,7 +29,8 @@ public class Game {
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
-    health = 2;
+    health = 100;
+    time = 160;
     updateTitle();
     grid.setBackground("images\\mainBackground.png");
     grid.setMovableBackground("images\\mainBackground.png", 0, 0, 1.0, 1.0);
@@ -51,7 +54,7 @@ public class Game {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
     if(key == 38 || key == 87) {  // UP
-     if(userRow <= 0) {
+     if(userRow <= 3) {
        return;
      }
      userRow--;
@@ -94,42 +97,45 @@ public class Game {
   }
 
   public void populateRightEdge() {
-    for(int i = 0; i < 1; i++){
-      int place = (int)(Math.random() * grid.getNumRows());
+      int place = 3 + (int)(Math.random() * (grid.getNumRows() - 3));
       Location loc = new Location(place, grid.getNumCols() - 1);
       grid.setImage(loc, zPic);
-    }
   }
   
   public void scrollLeft() {
-   for(int i = 0; i < grid.getNumRows(); i++){
-      for(int j = 0; j < grid.getNumCols(); j++){
-        Location loc = new Location(i, j);
-        if( zPic.equals(grid.getImage(loc))){
-          Location enemyLoc = new Location(i, j - 1);
-          grid.setImage(enemyLoc, zPic);
-          Location oldLoc = new Location(i, j);
-          grid.setImage(oldLoc, null);
-       }
-      }
+    for(int i = 0; i < grid.getNumRows(); i++){
+       for(int j = 0; j < grid.getNumCols(); j++){
+         Location loc = new Location(i, j);
+         Location end = new Location(i, 0);
+         if(zPic.equals(grid.getImage(end))){
+           grid.setImage(end, null);
+         }
+         if(zPic.equals(grid.getImage(loc))){
+           Location enemyLoc = new Location(i, j -1);
+           grid.setImage(enemyLoc, zPic);
+           Location oldLoc = new Location(i,j);
+           grid.setImage(oldLoc, null);
+           handleCollision(enemyLoc);
+        }
+     }
     }
   }
   
   public void handleCollision(Location zLoc) {
-    if(zLoc.equals(new Location(userRow+1,userCol))||
-    zLoc.equals(new Location(userRow-1,userCol))||
-    zLoc.equals(new Location(userRow,userCol+1))||
-    zLoc.equals(new Location(userRow,userCol-1))) {
+    if(zLoc.equals(new Location(userRow + 1, userCol))||
+    zLoc.equals(new Location(userRow - 1, userCol))||
+    zLoc.equals(new Location(userRow, userCol + 1))||
+    zLoc.equals(new Location(userRow, userCol - 1))) {
       health--;
     }
   }
 
   public int getTime() {
-    return 160;
+    return time;
   }
   
   public int getHealth() {
-    return 100;
+    return health;
   }
 
   public int getScore() {
