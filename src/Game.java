@@ -3,7 +3,9 @@ public class Game {
   // "APOCALYPSE OF THE DAMNED" created by MADISON VELEZ, AHMED DIABY, AND JARED
   // CID
 
+  private Grid title;
   private Grid grid;
+  private Grid battle;
   private int userRow;
   private int userCol;
   private int rowLength;
@@ -124,7 +126,6 @@ public class Game {
           }
           grid.setImage(new Location(userRow, userCol), player);
         }
-
       }
     }
   }
@@ -164,6 +165,49 @@ public class Game {
     }
   }
 
+  public void playerAttack(String zombie) {
+    battle = new Grid(5, 5, "battleBackground.png");
+    battle.setTitle("Player Attack");
+    battle.setImage(new Location(3, 1), player);
+    battle.setImage(new Location(3, 3), zombie);
+    battle.pause(500);
+    battle.setImage(new Location(3, 1), null);
+    battle.setImage(new Location(3, 2), zombie);
+    battle.pause(500);
+    battle.setImage(new Location(3, 3), zombie.substring(0, zombie.length() - 4) + "Attack.gif");
+    battle.pause(500);
+    battle.setImage(new Location(3, 3), null);
+    battle.pause(500);
+    battle.setImage(new Location(3, 2), null);
+    battle.setImage(new Location(3, 1), player);
+    battle.pause(500);
+    // battle.stop();
+  }
+
+  public void enemyAttack(String zombie) {
+    battle = new Grid(5, 5, "battleBackground.png");
+    battle.setTitle("Enemy Attack");
+    battle.setImage(new Location(3, 1), player);
+    battle.setImage(new Location(3, 3), zombie);
+    battle.pause(500);
+    battle.setImage(new Location(3, 1), null);
+    battle.setImage(new Location(3, 2), zombie);
+    battle.pause(500);
+    if (health <= 0) {
+      battle.setImage(new Location(3, 1), player.substring(0, player.length() - 4) + "Attack.gif");
+      battle.pause(500);
+      battle.setImage(new Location(3, 1), null);
+    } else {
+      battle.setImage(new Location(3, 1), player.substring(0, player.length() - 4) + "Attack.gif");
+      battle.pause(500);
+      battle.setImage(new Location(3, 1), player);
+    }
+    battle.pause(500);
+    battle.setImage(new Location(3, 2), null);
+    battle.setImage(new Location(3, 3), zombie);
+    battle.pause(500);
+    // battle.close;
+    }
   public static void main(String[] args) {
     Game game = new Game();
     game.play();
