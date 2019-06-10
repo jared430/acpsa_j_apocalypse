@@ -418,4 +418,12 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 	{
 		return JOptionPane.showInputDialog(this, message);
 	}
+
+	public void close(){
+		frame.dispose();
+	}
+
+	public void fullscreen(){
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	}
 }

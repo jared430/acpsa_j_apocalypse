@@ -23,6 +23,10 @@ public class Game {
   // MAIN CLASS
 
   public Game() {
+
+    backgroundMusic = new WavPlayer("audio\\BMCTPG8BIT.wav");
+
+    title = new Grid(10, 20/* , "images\\titleScreen.png" */);
     grid = new Grid(10, 20);
     userRow = grid.getNumRows() / 2; // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
     userCol = 0;
@@ -32,15 +36,19 @@ public class Game {
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
-    health = 100;
-    time = 160;
+    health = 3;
+    time = 30000;
     updateTitle();
     grid.setBackground("images\\mainBackground.png");
+    grid.fullscreen();
+    // backgroundMusic.startSound();
     grid.setMovableBackground("images\\mainBackground.png", 0, 0, 1.0, 1.0);
     grid.setImage(new Location(userRow, userCol), player);
   }
 
   public void play() {
+
+    backgroundMusic.startSound();
     while (!isGameOver()) {
       grid.pause(100);
       handleKeyPress();
@@ -50,6 +58,7 @@ public class Game {
       }
       updateTitle();
       msElapsed += 100;
+
     }
   }
 
@@ -118,11 +127,13 @@ public class Game {
           if (j == 0) {
             grid.setImage(end, null);
           } else if (zombies[z].equals(grid.getImage(oldLoc)) && player.equals(grid.getImage(newLoc))) {
-            battleIntegration();
+
           } else if (zombies[z].equals(grid.getImage(oldLoc))) {
             grid.setImage(oldLoc, null);
             grid.setImage(newLoc, zombies[z]);
-            handleCollision(newLoc);
+
+            handleCollision(newLoc, zombies[z]);
+
           }
           grid.setImage(new Location(userRow, userCol), player);
         }
@@ -130,14 +141,24 @@ public class Game {
     }
   }
 
-  public void handleCollision(Location zLoc) {
+  public void handleCollision(Location zLoc, String zombie) {
     if (zLoc.equals(new Location(userRow, userCol + 1))) {
-      health--;
+
+      // run the animoationikjl
+      if (Math.random() > 0.50) {
+        playerAttack(zombie);
+      } else {
+        enemyAttack(zombie);
+        health--;
+      }
+
+      grid.setImage(zLoc, null);
+
     }
   }
 
   public int getTime() {
-    return time;
+    return (time - msElapsed) / 1000;
   }
 
   public int getHealth() {
@@ -153,7 +174,7 @@ public class Game {
   }
 
   public boolean isGameOver() {
-    return false;
+    return (health == -1) || (getTime() < 0);
   }
 
   public void setUserRow() {
@@ -165,49 +186,106 @@ public class Game {
     }
   }
 
-  public void playerAttack(String zombie) {
-    battle = new Grid(5, 5, "battleBackground.png");
+  private void attackStart(String zombie) {
+
+    battle = new Grid(5, 5, "images\\battleBackground.png");
     battle.setTitle("Player Attack");
+
+    // display
     battle.setImage(new Location(3, 1), player);
     battle.setImage(new Location(3, 3), zombie);
     battle.pause(500);
+  }
+
+  public void playerAttack(String zombie) {
+
+    attackStart(zombie);
+
+    // move Jeremy over
     battle.setImage(new Location(3, 1), null);
-    battle.setImage(new Location(3, 2), zombie);
+    battle.setImage(new Location(3, 2), player);
     battle.pause(500);
-    battle.setImage(new Location(3, 3), zombie.substring(0, zombie.length() - 4) + "Attack.gif");
+
+    // check which zombie we have
+
+    String zombieSlash = "";
+
+    if (zombie.equals("images\\zombie1.gif")) {
+      zombieSlash = "images\\attackedZombie1.gif";
+    }
+
+    if (zombie.equals("images\\zombie2.gif")) {
+      zombieSlash = "images\\attackedZombie2.gif";
+    }
+
+    if (zombie.equals("images\\zombie3.gif")) {
+      zombieSlash = "images\\attackedZombie3.gif";
+    }
+
+    // slash zombie
+    battle.setImage(new Location(3, 3), zombieSlash);
     battle.pause(500);
+    // add sound effect
     battle.setImage(new Location(3, 3), null);
     battle.pause(500);
+
+    // retreat Jereemy
     battle.setImage(new Location(3, 2), null);
     battle.setImage(new Location(3, 1), player);
-    battle.pause(500);
-    // battle.stop();
+
+    // blinky death
+
+    battle.pause(1500);
+
+    // close screen
+    battle.close();
   }
 
   public void enemyAttack(String zombie) {
-    battle = new Grid(5, 5, "battleBackground.png");
-    battle.setTitle("Enemy Attack");
-    battle.setImage(new Location(3, 1), player);
-    battle.setImage(new Location(3, 3), zombie);
-    battle.pause(500);
-    battle.setImage(new Location(3, 1), null);
+
+    attackStart(zombie);
+
+    // move zombie over
+    battle.setImage(new Location(3, 3), null);
     battle.setImage(new Location(3, 2), zombie);
     battle.pause(500);
-    if (health <= 0) {
-      battle.setImage(new Location(3, 1), player.substring(0, player.length() - 4) + "Attack.gif");
-      battle.pause(500);
+
+    // check which zombie we have
+
+    String playerSlash = "";
+
+    if (player.equals("images\\jeremyHeere.gif")) {
+      playerSlash = "images\\attackedJeremyHeere.gif";
+    }
+
+    if (player.equals("images\\michaelMell.gif")) {
+      playerSlash = "images\\attackedMichaelMell.gif";
+    }
+
+    // slash player
+    battle.setImage(new Location(3, 1), playerSlash);
+    battle.pause(500);
+    // add sound effect
+    battle.setImage(new Location(3, 1), null);
+    battle.pause(500);
+
+    // blink player
+
+    for (int i = 0; i < 5; i++) {
       battle.setImage(new Location(3, 1), null);
-    } else {
-      battle.setImage(new Location(3, 1), player.substring(0, player.length() - 4) + "Attack.gif");
-      battle.pause(500);
-      battle.setImage(new Location(3, 1), player);
+      battle.pause(100);
+      battle.setImage(new Location(3, 1), playerSlash);
+      battle.pause(100);
     }
-    battle.pause(500);
+
+    // retreat zombie
     battle.setImage(new Location(3, 2), null);
-    battle.setImage(new Location(3, 3), zombie);
-    battle.pause(500);
-    // battle.close;
-    }
+    battle.pause(1500);
+
+    // close screen
+    battle.close();
+  }
+
   public static void main(String[] args) {
     Game game = new Game();
     game.play();
