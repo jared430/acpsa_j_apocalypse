@@ -142,7 +142,6 @@ public class Game {
       } else {
         enemyAttack(zombie);
         health--;
-        score--;
       }
       grid.setImage(zLoc, null);
     }
