@@ -17,10 +17,11 @@ public class Game {
   private int timesAvoid;
   private WavPlayer backgroundMusic;
   private int health;
+  private int time;
+  private int score;
   private String player = "images\\jeremyHeere.gif";
   private String zPic = "images\\zombie2.gif";
   private String[] zombies = { "images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif" };
-  private int time;
 
   // MAIN CLASS
 
@@ -37,6 +38,7 @@ public class Game {
     timesAvoid = 0;
     health = 10;
     time = 30000;
+    score = 0;
     updateTitle();
     grid.fullscreen();
     grid.setBackground("images\\mainBackground.png");
@@ -136,9 +138,11 @@ public class Game {
       // run the animoationikjl
       if (Math.random() > 0.50) {
         playerAttack(zombie);
+        score++;
       } else {
         enemyAttack(zombie);
         health--;
+        score--;
       }
       grid.setImage(zLoc, null);
     }
@@ -153,11 +157,11 @@ public class Game {
   }
 
   public int getScore() {
-    return 0;
+    return score;
   }
 
   public void updateTitle() {
-    grid.setTitle("Game:  " + getScore() + " Health:  " + getHealth() + " Time:  " + getTime());
+    grid.setTitle("Score:  " + getScore() + " Health:  " + getHealth() + " Time:  " + getTime());
   }
 
   public boolean isGameOver() {
@@ -186,6 +190,12 @@ public class Game {
   private void characterSelectionScreen() {
     characterselection = new Grid (10, 20, "images\\characterSelectionScreen.png");
     characterselection.setTitle("SELECT YOUR CHARACTER");
+  }
+
+  public void executeIntroduction(){
+    splashScreen();
+    directionScreen();
+    characterSelectionScreen();
   }
 
   private void attackStart(String zombie) {
