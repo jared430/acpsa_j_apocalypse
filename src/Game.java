@@ -40,14 +40,27 @@ public class Game {
     time = 30000;
     score = 0;
     updateTitle();
+   
+  }
+
+  public void play() {
+
+    //splash screen
+    splashScreen();
+
+    //directions screen
+    directionScreen();
+
+    //character selection screen
+    characterSelectionScreen();
+
+    //main gameplay
+    backgroundMusic.startSound();
     grid.fullscreen();
     grid.setBackground("images\\mainBackground.png");
     grid.setMovableBackground("images\\mainBackground.png", 0, 0, 1.0, 1.0);
     grid.setImage(new Location(userRow, userCol), player);
-  }
 
-  public void play() {
-    backgroundMusic.startSound();
     while (!isGameOver()) {
       grid.pause(100);
       handleKeyPress();
@@ -58,6 +71,10 @@ public class Game {
       updateTitle();
       msElapsed += 100;
     }
+
+    //post-game screens
+
+
   }
 
   public void handleKeyPress() {
@@ -179,22 +196,22 @@ public class Game {
   private void splashScreen() {
     splash = new Grid (10, 20, "images\\splashScreen.jpg");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
+    splash.fullscreen();
+    splash.pause(1000);
+    
   }
 
   private void directionScreen() {
-    directions = new Grid (10, 20, "images\\directionScreen.png");
-    directions.setTitle("DIRECTIONS");
+    splash.setBackground("images\\directionScreen.png");
+    splash.setTitle("DIRECTIONS");
+    splash.pause(1000);
   }
 
   private void characterSelectionScreen() {
-    characterselection = new Grid (10, 20, "images\\characterSelectionScreen.png");
-    characterselection.setTitle("SELECT YOUR CHARACTER");
-  }
-
-  public void executeIntroduction(){
-    splashScreen();
-    directionScreen();
-    characterSelectionScreen();
+    splash.setBackground("images\\characterSelectionScreen.png");
+    splash.setTitle("SELECT YOUR CHARACTER");
+    splash.pause(1000);
+    splash.close();
   }
 
   private void attackStart(String zombie) {
