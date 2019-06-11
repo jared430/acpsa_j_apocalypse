@@ -19,7 +19,9 @@ public class Game {
   private int health;
   private int time;
   private int score;
-  private String player = "images\\jeremyHeere.gif";
+  private String jPic = "images\\jeremyHeere.gif";
+  private String mPic = "images\\michaelMell.gif";
+  private String player = jPic;
   private String zPic = "images\\zombie2.gif";
   private String[] zombies = { "images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif" };
 
@@ -40,21 +42,20 @@ public class Game {
     time = 30000;
     score = 0;
     updateTitle();
-   
   }
 
   public void play() {
 
-    //splash screen
+    // splash screen
     splashScreen();
 
-    //directions screen
+    // directions screen
     directionScreen();
 
-    //character selection screen
+    // character selection screen
     characterSelectionScreen();
 
-    //main gameplay
+    // main gameplay
     backgroundMusic.startSound();
     grid.fullscreen();
     grid.setBackground("images\\mainBackground.png");
@@ -72,8 +73,7 @@ public class Game {
       msElapsed += 100;
     }
 
-    //post-game screens
-
+    // post-game screens
 
   }
 
@@ -194,11 +194,11 @@ public class Game {
   }
 
   private void splashScreen() {
-    splash = new Grid (10, 20, "images\\splashScreen.jpg");
+    splash = new Grid(5, 10, "images\\splashScreen.jpg");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
     splash.fullscreen();
     splash.pause(1000);
-    
+
   }
 
   private void directionScreen() {
@@ -210,8 +210,30 @@ public class Game {
   private void characterSelectionScreen() {
     splash.setBackground("images\\characterSelectionScreen.png");
     splash.setTitle("SELECT YOUR CHARACTER");
-    splash.pause(1000);
-    splash.close();
+    Location mLoc = new Location(3, 5);
+    Location jLoc = new Location(3, 8);
+    splash.setImage(mLoc, mPic);
+    splash.setImage(jLoc, jPic);
+    while (true) {
+      Location clicked = splash.checkLastLocationClicked();
+      splash.pause(100);
+      if (clicked != null) {
+        System.out.print(clicked.getRow() + clicked.getCol());
+        if (mLoc.equals(clicked)) {
+          player = mPic;
+          splash.pause(1000);
+          splash.close();
+          return;
+        } else if (jLoc.equals(clicked)) {
+          player = jPic;
+          splash.pause(1000);
+          splash.close();
+
+          return;
+        }
+      }
+    }
+
   }
 
   private void attackStart(String zombie) {
