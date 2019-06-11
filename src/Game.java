@@ -4,6 +4,8 @@ public class Game {
   // CID
 
   private Grid splash;
+  private Grid directions;
+  private Grid characterselection;
   private Grid grid;
   private Grid battle;
   private int userRow;
@@ -174,6 +176,16 @@ public class Game {
   private void splashScreen() {
     splash = new Grid (10, 20, "images\\splashScreen.jpg");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
+  }
+
+  private void directionScreen() {
+    directions = new Grid (10, 20, "images\\directionScreen.png");
+    directions.setTitle("DIRECTIONS");
+  }
+
+  private void characterSelectionScreen() {
+    characterselection = new Grid (10, 20, "images\\characterSelectionScreen.png");
+    characterselection.setTitle("SELECT YOUR CHARACTER");
   }
 
   private void attackStart(String zombie) {
