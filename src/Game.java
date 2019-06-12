@@ -76,16 +76,19 @@ public class Game {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
     if (key == 38 || key == 87) { // UP
+      // DON'T GO PAST THE LOCKERS
       if (userRow <= 3) {
         return;
       }
+      // MOVING THE PLAYER IN OTHER DIRECTIONS BESIDES UP
       userRow--;
       Location loc = new Location(userRow, userCol);
       grid.setImage(loc, player);
+      // ERASE THE OLD PLAYER IMAGE
       Location oldLoc = new Location(userRow + 1, userCol);
       grid.setImage(oldLoc, null);
     } else if (key == 40 || key == 83) { // DOWN
-      if (userRow >= 8) {
+      if (userRow >= grid.getNumRows()) {
         return;
       }
       userRow++;
