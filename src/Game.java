@@ -77,36 +77,32 @@ public class Game {
 
   }
 
+  //BOUNDARY ERRORS
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
     if (key == 38 || key == 87) { // UP
-      //don't go into lockers
+      // don't go isnto lockers
       if (userRow <= 3) {
         return;
       }
-      //move player image
+      // move player image
       userRow--;
       Location loc = new Location(userRow, userCol);
       grid.setImage(loc, player);
-      
-      //erase old player image
+      // erase old player image
       Location oldLoc = new Location(userRow + 1, userCol);
       grid.setImage(oldLoc, null);
-    
     } else if (key == 40 || key == 83) { // DOWN
-      
       userRow++;
       if (userRow > grid.getNumRows()) {
         return;
       }
-      
       Location loc = new Location(userRow, userCol);
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow - 1, userCol);
       grid.setImage(oldLoc, null);
     } else if (key == 37 || key == 65) { // LEFT
-      
       userCol--;
       if (userCol <= 0) {
         return;
@@ -117,7 +113,7 @@ public class Game {
       grid.setImage(oldLoc, null);
     } else if (key == 39 || key == 68) { // RIGHT
       userCol++;
-      if (userCol > grid.getNumCols()){
+      if (userCol > grid.getNumCols()) {
         return;
       }
       Location loc = new Location(userRow, userCol);
@@ -218,7 +214,7 @@ public class Game {
   private void characterSelectionScreen() {
     splash.setBackground("images\\characterSelectionScreen.png");
     splash.setTitle("SELECT YOUR CHARACTER");
-    Location mLoc = new Location(3, 5);
+    Location mLoc = new Location(3, 2);
     Location jLoc = new Location(3, 8);
     splash.setImage(mLoc, mPic);
     splash.setImage(jLoc, jPic);
@@ -236,7 +232,6 @@ public class Game {
           player = jPic;
           splash.pause(1000);
           splash.close();
-
           return;
         }
       }
