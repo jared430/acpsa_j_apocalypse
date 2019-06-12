@@ -29,7 +29,7 @@ public class Game {
 
   public Game() {
     backgroundMusic = new WavPlayer("audio\\BMCTPG8BIT.wav");
-    grid = new Grid(9, 16);
+    grid = new Grid(10, 20);
     userRow = grid.getNumRows() / 2; // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
     userCol = 0;
     rowLength = grid.getNumRows();
@@ -76,40 +76,37 @@ public class Game {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
     if (key == 38 || key == 87) { // UP
-      // don't go isnto lockers
       if (userRow <= 3) {
         return;
       }
-      // move player image
       userRow--;
       Location loc = new Location(userRow, userCol);
       grid.setImage(loc, player);
-      // erase old player image
       Location oldLoc = new Location(userRow + 1, userCol);
       grid.setImage(oldLoc, null);
     } else if (key == 40 || key == 83) { // DOWN
-      userRow++;
-      if (userRow > grid.getNumRows()) {
+      if (userRow >= 9) {
         return;
       }
+      userRow++;
       Location loc = new Location(userRow, userCol);
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow - 1, userCol);
       grid.setImage(oldLoc, null);
     } else if (key == 37 || key == 65) { // LEFT
-      userCol--;
-      if (userCol < 0) {
+      if (userCol <= 0) {
         return;
       }
+      userCol--;
       Location loc = new Location(userRow, userCol);
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow, userCol + 1);
       grid.setImage(oldLoc, null);
     } else if (key == 39 || key == 68) { // RIGHT
-      userCol++;
-      if (userCol > grid.getNumCols()) {
+      if (userCol >= 19) {
         return;
       }
+      userCol++;
       Location loc = new Location(userRow, userCol);
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow, userCol - 1);
@@ -202,7 +199,7 @@ public class Game {
   private void directionScreen() {
     splash.setBackground("images\\directionScreen.png");
     splash.setTitle("DIRECTIONS");
-    splash.pause(10000);
+    splash.pause(1000);
   }
 
   private void characterSelectionScreen() {
