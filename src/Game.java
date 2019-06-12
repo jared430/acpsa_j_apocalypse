@@ -16,20 +16,22 @@ public class Game {
   private int timesGet;
   private int timesAvoid;
   private WavPlayer backgroundMusic;
+  private WavPlayer attackSound;
   private int health;
   private int time;
   private int score;
   private String jPic = "images\\jeremyHeere.gif";
   private String mPic = "images\\michaelMell.gif";
-  private String player = jPic;
-  private String zPic = "images\\zombie2.gif";
+  private String player = mPic;
+  private String zPic = "images\\zombie1.gif";
+  private String mtnPic = "images\\mtnDewRed.gif";
   private String[] zombies = { "images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif" };
 
   // MAIN CLASS
 
   public Game() {
     backgroundMusic = new WavPlayer("audio\\BMCTPG8BIT.wav");
-    grid = new Grid(9, 16);
+    grid = new Grid(9, 17);
     userRow = grid.getNumRows() / 2; // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
     userCol = 0;
     rowLength = grid.getNumRows();
@@ -75,6 +77,7 @@ public class Game {
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
+
     if (key == 38 || key == 87) { // UP
       // DON'T GO PAST THE LOCKERS
       if (userRow <= 3) {
@@ -87,8 +90,10 @@ public class Game {
       // ERASE THE OLD PLAYER IMAGE
       Location oldLoc = new Location(userRow + 1, userCol);
       grid.setImage(oldLoc, null);
+
     } else if (key == 40 || key == 83) { // DOWN
-      if (userRow >= grid.getNumRows()) {
+
+      if (userRow >= grid.getNumRows() - 1) {
         return;
       }
       userRow++;
@@ -96,6 +101,7 @@ public class Game {
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow - 1, userCol);
       grid.setImage(oldLoc, null);
+
     } else if (key == 37 || key == 65) { // LEFT
       if (userCol <= 0) {
         return;
@@ -105,8 +111,9 @@ public class Game {
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow, userCol + 1);
       grid.setImage(oldLoc, null);
+
     } else if (key == 39 || key == 68) { // RIGHT
-      if (userCol >= 16) {
+      if (userCol >= grid.getNumCols() - 1) {
         return;
       }
       userCol++;
@@ -136,7 +143,6 @@ public class Game {
           if (j == 0) {
             grid.setImage(end, null);
           } else if (zombies[z].equals(grid.getImage(oldLoc)) && player.equals(grid.getImage(newLoc))) {
-
           } else if (zombies[z].equals(grid.getImage(oldLoc))) {
             grid.setImage(oldLoc, null);
             grid.setImage(newLoc, zombies[z]);
@@ -195,14 +201,14 @@ public class Game {
     splash = new Grid(5, 10, "images\\splashScreen.jpg");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
     splash.fullscreen();
-    splash.pause(5000);
+    splash.pause(1000);
 
   }
 
   private void directionScreen() {
     splash.setBackground("images\\directionScreen.png");
     splash.setTitle("DIRECTIONS");
-    splash.pause(10000);
+    splash.pause(1000);
   }
 
   private void characterSelectionScreen() {
