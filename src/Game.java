@@ -29,7 +29,7 @@ public class Game {
 
   public Game() {
     backgroundMusic = new WavPlayer("audio\\BMCTPG8BIT.wav");
-    grid = new Grid(10, 20);
+    grid = new Grid(9, 16);
     userRow = grid.getNumRows() / 2; // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
     userCol = 0;
     rowLength = grid.getNumRows();
@@ -71,7 +71,7 @@ public class Game {
 
   }
 
-  //BOUNDARY ERRORS
+  // BOUNDARY ERRORS
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
@@ -85,7 +85,7 @@ public class Game {
       Location oldLoc = new Location(userRow + 1, userCol);
       grid.setImage(oldLoc, null);
     } else if (key == 40 || key == 83) { // DOWN
-      if (userRow >= 9) {
+      if (userRow >= 8) {
         return;
       }
       userRow++;
@@ -103,7 +103,7 @@ public class Game {
       Location oldLoc = new Location(userRow, userCol + 1);
       grid.setImage(oldLoc, null);
     } else if (key == 39 || key == 68) { // RIGHT
-      if (userCol >= 19) {
+      if (userCol >= 16) {
         return;
       }
       userCol++;
@@ -192,14 +192,14 @@ public class Game {
     splash = new Grid(5, 10, "images\\splashScreen.jpg");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
     splash.fullscreen();
-    splash.pause(1000);
+    splash.pause(5000);
 
   }
 
   private void directionScreen() {
     splash.setBackground("images\\directionScreen.png");
     splash.setTitle("DIRECTIONS");
-    splash.pause(1000);
+    splash.pause(10000);
   }
 
   private void characterSelectionScreen() {
