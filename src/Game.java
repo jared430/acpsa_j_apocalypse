@@ -39,29 +39,24 @@ public class Game {
     timesGet = 0;
     timesAvoid = 0;
     health = 10;
-    time = 30000;
+    time = 160000;
     score = 0;
     updateTitle();
   }
 
   public void play() {
-
     // splash screen
     splashScreen();
-
     // directions screen
     directionScreen();
-
     // character selection screen
     characterSelectionScreen();
-
     // main gameplay
     backgroundMusic.startSound();
     grid.fullscreen();
     grid.setBackground("images\\mainBackground.png");
     grid.setMovableBackground("images\\mainBackground.png", 0, 0, 1.0, 1.0);
     grid.setImage(new Location(userRow, userCol), player);
-
     while (!isGameOver()) {
       grid.pause(100);
       handleKeyPress();
@@ -72,7 +67,6 @@ public class Game {
       updateTitle();
       msElapsed += 100;
     }
-
     // post-game screens
 
   }
@@ -104,7 +98,7 @@ public class Game {
       grid.setImage(oldLoc, null);
     } else if (key == 37 || key == 65) { // LEFT
       userCol--;
-      if (userCol <= 0) {
+      if (userCol < 0) {
         return;
       }
       Location loc = new Location(userRow, userCol);
@@ -208,13 +202,13 @@ public class Game {
   private void directionScreen() {
     splash.setBackground("images\\directionScreen.png");
     splash.setTitle("DIRECTIONS");
-    splash.pause(1000);
+    splash.pause(10000);
   }
 
   private void characterSelectionScreen() {
     splash.setBackground("images\\characterSelectionScreen.png");
     splash.setTitle("SELECT YOUR CHARACTER");
-    Location mLoc = new Location(3, 2);
+    Location mLoc = new Location(3, 1);
     Location jLoc = new Location(3, 8);
     splash.setImage(mLoc, mPic);
     splash.setImage(jLoc, jPic);
