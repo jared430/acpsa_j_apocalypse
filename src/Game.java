@@ -245,17 +245,14 @@ public class Game {
   }
 
   private void gameOverScreen() {
-
     grid.close();
     backgroundMusic.pauseSound();
-
     if (health == 0) {
       splash = new Grid(5, 10, "images\\gameOverScreenH.png");
       splash.setTitle("GAME OVER");
       splash.fullscreen();
       splash.waitForClick();
       splash.close();
-
     } else if (getTime() < 0) {
       splash = new Grid(5, 10, "images\\gameOverScreenT.png");
       splash.setTitle("GAME OVER");
@@ -342,8 +339,7 @@ public class Game {
 
   public static void main(String[] args) {
     Game game = new Game();
-
-    while (shouldGameContinue) {
+    while (shouldGameContinue) {  // REPEATS GAME
       game.play();
     }
   }
