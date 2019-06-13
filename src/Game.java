@@ -8,6 +8,7 @@ public class Game {
   private Grid characterselection;
   private Grid grid;
   private Grid battle;
+  private Grid gameOverScreen;
   private int userRow;
   private int userCol;
   private int rowLength;
@@ -40,8 +41,8 @@ public class Game {
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
-    health = 10;
-    time = 160000;
+    health = 3;
+    time = 10000;
     score = 0;
     updateTitle();
   }
@@ -69,16 +70,15 @@ public class Game {
       }
       updateTitle();
       msElapsed += 100;
+    } else {
+      gameOverScreen();
     }
-    // post-game screens
-
   }
 
   // BOUNDARY ERRORS
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
-
     if (key == 38 || key == 87) { // UP
       // DON'T GO PAST THE LOCKERS
       if (userRow <= 3) {
@@ -91,9 +91,7 @@ public class Game {
       // ERASE THE OLD PLAYER IMAGE
       Location oldLoc = new Location(userRow + 1, userCol);
       grid.setImage(oldLoc, null);
-
     } else if (key == 40 || key == 83) { // DOWN
-
       if (userRow >= grid.getNumRows() - 1) {
         return;
       }
@@ -102,7 +100,6 @@ public class Game {
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow - 1, userCol);
       grid.setImage(oldLoc, null);
-
     } else if (key == 37 || key == 65) { // LEFT
       if (userCol <= 0) {
         return;
@@ -243,6 +240,20 @@ public class Game {
       }
     }
   }
+
+  private void gameOverScreen() {
+    if (health == 0) {
+    splash = new Grid(5, 10, "images\\gameOverScreenH.jpg");
+    splash.setTitle("GAME OVER");
+    splash.waitForClick();
+    splash.close();
+  } else if (getTime() < 0) {
+    splash = new Grid (5, 10, "images\\gameOverScreenT.jpg");
+    splash.setTitle("GAME OVER");
+    splash.waitForClick();
+    splash.close();
+  }
+}
 
   private void attackStart(String zombie) {
     battle = new Grid(5, 5, "images\\battleBackground.png");
