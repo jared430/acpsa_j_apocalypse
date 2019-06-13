@@ -1,3 +1,4 @@
+
 /*
  * Updated version of Grid class
  * Date 5/31/2018
@@ -12,8 +13,7 @@ import java.net.*;
 import javax.imageio.*;
 import javax.swing.*;
 
-public class Grid extends JComponent implements KeyListener, MouseListener
-{
+public class Grid extends JComponent implements KeyListener, MouseListener {
 	private Cell[][] cells;
 	private JFrame frame;
 	private int lastKeyPressed;
@@ -26,31 +26,29 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 	private int yOffset;
 	private double xScale;
 	private double yScale;
-	
 
-	public Grid(int numRows, int numCols)
-	{
+	public Grid(int numRows, int numCols) {
 
 		init(numRows, numCols);
 
 	}
 
 	/**
-	 * USE THIS CONSTRUCTOR IF YOU WANT A BACKGROUND IMAGE
-	 * Note:  If you use this constructor then you cannot use the method setColor()
+	 * USE THIS CONSTRUCTOR IF YOU WANT A BACKGROUND IMAGE Note: If you use this
+	 * constructor then you cannot use the method setColor()
+	 * 
 	 * @param numRows
 	 * @param numCols
 	 * @param imageName the background
 	 */
-	public Grid(int numRows, int numCols,String imageName)
-	{
-		
-		init(numRows, numCols);		
+	public Grid(int numRows, int numCols, String imageName) {
+
+		init(numRows, numCols);
 		setBackground(imageName);
 
 	}
-	public Grid(String imageFileName)
-	{
+
+	public Grid(String imageFileName) {
 		BufferedImage image = loadImage(imageFileName);
 		init(image.getHeight(), image.getWidth());
 		showImage(image);
@@ -58,98 +56,88 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 	}
 
 	/**
-	 * sets the background to imgName.  The img is resized to fit in the grids dimensions.
-	 * setColor() is disabled
-	 * @param imgName 
+	 * sets the background to imgName. The img is resized to fit in the grids
+	 * dimensions. setColor() is disabled
+	 * 
+	 * @param imgName
 	 */
-	public void setBackground(String imgName)
-	{
+	public void setBackground(String imgName) {
 
 		this.xOffset = 0;
 		this.yOffset = 0;
 		this.xScale = 1.0;
 		this.yScale = 1.0;
-		
+
 		backgroundImage = loadImage(imgName);
-		bgSet=true;
+		bgSet = true;
 
 		repaint();
 	}
 
-	
 	/**
-	 * sets the background to imgName.  The img is resized to fit in the grids dimensions.
-	 * setColor() is disabled
-	 * @param imgName 
+	 * sets the background to imgName. The img is resized to fit in the grids
+	 * dimensions. setColor() is disabled
+	 * 
+	 * @param imgName
 	 */
-	public void setMovableBackground(String imgName, int xOffset, int yOffset, double xScale, double yScale)
-	{
+	public void setMovableBackground(String imgName, int xOffset, int yOffset, double xScale, double yScale) {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.xScale = xScale;
 		this.yScale = yScale;
-		
+
 		backgroundImage = loadImage(imgName);
-		bgSet=true;
+		bgSet = true;
 
 		repaint();
 	}
-	
+
 	/**
 	 * moves the background image within the frame.
+	 * 
 	 * @param dx how much to move the image to the right (+) or left (-)
 	 * @param dy how much to move the image down (+) or up (-)
 	 */
-	public void moveBackground(int dx, int dy)
-	{
+	public void moveBackground(int dx, int dy) {
 		this.xOffset += dx;
 		this.yOffset += dy;
 
 		repaint();
 	}
 
-
 	/**
-	 * removes the background, allowing setColor to work again. 
+	 * removes the background, allowing setColor to work again.
 	 */
-	public void removeBackground()
-	{
-		bgSet=false;
+	public void removeBackground() {
+		bgSet = false;
 	}
-	private BufferedImage loadImage(String imageFileName)
-	{
+
+	private BufferedImage loadImage(String imageFileName) {
 		URL url = getClass().getResource(imageFileName);
 		if (url == null)
 			throw new RuntimeException("cannot find file:  " + imageFileName);
-		try
-		{
+		try {
 			return ImageIO.read(url);
-		}
-		catch(IOException e)
-		{
+		} catch (IOException e) {
 			throw new RuntimeException("unable to read from file:  " + imageFileName);
 		}
 	}
 
-	public int getNumRows()
-	{
+	public int getNumRows() {
 		return cells.length;
 	}
 
-	public int getNumCols()
-	{
+	public int getNumCols() {
 		return cells[0].length;
 	}
 
-	private void init(int numRows, int numCols)
-	{
+	private void init(int numRows, int numCols) {
 		lastKeyPressed = -1;
 		lastLocationClicked = null;
 		lineColor = null;
 
 		cells = new Cell[numRows][numCols];
-		for (int row = 0; row < numRows; row++)
-		{
+		for (int row = 0; row < numRows; row++) {
 			for (int col = 0; col < numCols; col++)
 				cells[row][col] = new Cell();
 		}
@@ -167,50 +155,42 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		frame.setVisible(true);
 	}
 
-	private void showImage(BufferedImage image)
-	{
-		for (int row = 0; row < getNumRows(); row++)
-		{
-			for (int col = 0; col < getNumCols(); col++)
-			{
+	private void showImage(BufferedImage image) {
+		for (int row = 0; row < getNumRows(); row++) {
+			for (int col = 0; col < getNumCols(); col++) {
 				int x = col * image.getWidth() / getNumCols();
 				int y = row * image.getHeight() / getNumRows();
 				int c = image.getRGB(x, y);
-				
+
 				int red = (c & 0x00ff0000) >> 16;
 				int green = (c & 0x0000ff00) >> 8;
 				int blue = c & 0x000000ff;
-				
+
 				cells[row][col].setColor(new Color(red, green, blue));
 			}
 		}
 		repaint();
 	}
 
-	private int getCellSize()
-	{
+	private int getCellSize() {
 		int cellWidth = getWidth() / getNumCols();
 		int cellHeight = getHeight() / getNumRows();
 		return Math.min(cellWidth, cellHeight);
 	}
 
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
 		lastKeyPressed = e.getKeyCode();
 	}
 
-	public void keyReleased(KeyEvent e)
-	{
-		//ignored
+	public void keyReleased(KeyEvent e) {
+		// ignored
 	}
 
-	public void keyTyped(KeyEvent e)
-	{
-		//ignored
+	public void keyTyped(KeyEvent e) {
+		// ignored
 	}
 
-	public void mousePressed(MouseEvent e)
-	{
+	public void mousePressed(MouseEvent e) {
 		int cellSize = getCellSize();
 		int row = e.getY() / cellSize;
 		if (row < 0 || row >= getNumRows())
@@ -221,45 +201,37 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		lastLocationClicked = new Location(row, col);
 	}
 
-	public void mouseReleased(MouseEvent e)
-	{
-		//ignore
+	public void mouseReleased(MouseEvent e) {
+		// ignore
 	}
 
-	public void mouseClicked(MouseEvent e)
-	{
-		//ignore
+	public void mouseClicked(MouseEvent e) {
+		// ignore
 	}
 
-	public void mouseEntered(MouseEvent e)
-	{
-		//ignore
+	public void mouseEntered(MouseEvent e) {
+		// ignore
 	}
 
-	public void mouseExited(MouseEvent e)
-	{
-		//ignore
+	public void mouseExited(MouseEvent e) {
+		// ignore
 	}
 
-	private static java.awt.Color toJavaColor(Color color)
-	{
+	private static java.awt.Color toJavaColor(Color color) {
 		return new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue());
 	}
 
-	public void paintComponent(Graphics g)
-	{
-		if(bgSet) {
-			int bgWidth = (int) (frame.getWidth()*xScale);
-			int bgHeight = (int) (frame.getHeight()*yScale);
-			g.drawImage(backgroundImage, xOffset, yOffset, bgWidth,bgHeight,null);
-			//g.drawImage(backgroundImage,0,0,frame.getWidth(),frame.getHeight(),null);
-			
+	public void paintComponent(Graphics g) {
+		if (bgSet) {
+			int bgWidth = (int) (frame.getWidth() * xScale);
+			int bgHeight = (int) (frame.getHeight() * yScale);
+			g.drawImage(backgroundImage, xOffset, yOffset, bgWidth, bgHeight, null);
+			// g.drawImage(backgroundImage,0,0,frame.getWidth(),frame.getHeight(),null);
+
 		}
 
-		for (int row = 0; row < getNumRows(); row++)
-		{
-			for (int col = 0; col < getNumCols(); col++)
-			{
+		for (int row = 0; row < getNumRows(); row++) {
+			for (int col = 0; col < getNumCols(); col++) {
 				Location loc = new Location(row, col);
 				Cell cell = cells[loc.getRow()][loc.getCol()];
 
@@ -269,39 +241,33 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 				int cellSize = getCellSize();
 				int x = col * cellSize;
 				int y = row * cellSize;
-				if(!bgSet)
+				if (!bgSet)
 					g.fillRect(x, y, cellSize, cellSize);
 
 				String imageFileName = cell.getImageFileName();
-				if (imageFileName != null)
-				{
+				if (imageFileName != null) {
 					URL url = getClass().getResource(imageFileName);
 					if (url == null)
 						System.out.println("File not found:  " + imageFileName);
-					else
-					{
+					else {
 
 						Image image = new ImageIcon(url).getImage();
-						int width =  image.getWidth(null);
+						int width = image.getWidth(null);
 						int height = image.getHeight(null);
 						int max;
-						if (width > height)
-						{
+						if (width > height) {
 							int drawHeight = cellSize * height / width;
 							g.drawImage(image, x, y + (cellSize - drawHeight) / 2, cellSize, drawHeight, null);
-						}
-						else
-						{
+						} else {
 							int drawWidth = cellSize * width / height;
 
-							//g.drawOval(x + (cellSize - drawWidth) / 2, y, drawWidth, cellSize);
+							// g.drawOval(x + (cellSize - drawWidth) / 2, y, drawWidth, cellSize);
 							g.drawImage(image, x + (cellSize - drawWidth) / 2, y, drawWidth, cellSize, null);
 						}
 					}
 				}
 
-				if (lineColor != null)
-				{
+				if (lineColor != null) {
 					g.setColor(toJavaColor(lineColor));
 					g.drawRect(x, y, cellSize, cellSize);
 				}
@@ -309,121 +275,115 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		}
 	}
 
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 		frame.setTitle(title);
 	}
 
-	public boolean isValid(Location loc)
-	{
+	public boolean isValid(Location loc) {
 		int row = loc.getRow();
 		int col = loc.getCol();
 		return 0 <= row && row < getNumRows() && 0 <= col && col < getNumCols();
 	}
 
-	public void setColor(Location loc, Color color)
-	{
+	public void setColor(Location loc, Color color) {
 		if (!isValid(loc))
 			throw new RuntimeException("cannot set color of invalid location " + loc + " to color " + color);
 		cells[loc.getRow()][loc.getCol()].setColor(color);
 		repaint();
 	}
 
-	public Color getColor(Location loc)
-	{
+	public Color getColor(Location loc) {
 		if (!isValid(loc))
 			throw new RuntimeException("cannot get color from invalid location " + loc);
 		return cells[loc.getRow()][loc.getCol()].getColor();
 	}
 
-	public void setImage(Location loc, String imageFileName)
-	{
+	public void setImage(Location loc, String imageFileName) {
 		if (!isValid(loc))
-			throw new RuntimeException("cannot set image for invalid location " + loc + " to \"" + imageFileName + "\"");
+			throw new RuntimeException(
+					"cannot set image for invalid location " + loc + " to \"" + imageFileName + "\"");
 		cells[loc.getRow()][loc.getCol()].setImageFileName(imageFileName);
 		repaint();
 	}
 
-	public String getImage(Location loc)
-	{
+	public String getImage(Location loc) {
 		if (!isValid(loc))
 			throw new RuntimeException("cannot get image for invalid location " + loc);
 		return cells[loc.getRow()][loc.getCol()].getImageFileName();
 	}
 
-	public static void pause(int milliseconds)
-	{
-		try
-		{
+	public static void pause(int milliseconds) {
+		try {
 			Thread.sleep(milliseconds);
-		}
-		catch(Exception e)
-		{
-			//ignore
+		} catch (Exception e) {
+			// ignore
 		}
 	}
 
-	//returns -1 if no key pressed since last call.
-	//otherwise returns the code for the last key pressed.
-	public int checkLastKeyPressed()
-	{
+	// returns -1 if no key pressed since last call.
+	// otherwise returns the code for the last key pressed.
+	public int checkLastKeyPressed() {
 		int key = lastKeyPressed;
 		lastKeyPressed = -1;
 		return key;
 	}
 
-	//returns null if no location clicked since last call.
-	public Location checkLastLocationClicked()
-	{
+	// returns null if no location clicked since last call.
+	public Location checkLastLocationClicked() {
 		Location loc = lastLocationClicked;
 		lastLocationClicked = null;
 		return loc;
 	}
 
-	public void load(String imageFileName)
-	{
+	public void load(String imageFileName) {
 		showImage(loadImage(imageFileName));
 		setTitle(imageFileName);
 	}
 
-	public void save(String imageFileName)
-	{
-		try
-		{
+	public void save(String imageFileName) {
+		try {
 			BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
 			paintComponent(bi.getGraphics());
 			int index = imageFileName.lastIndexOf('.');
 			if (index == -1)
 				throw new RuntimeException("invalid image file name:  " + imageFileName);
 			ImageIO.write(bi, imageFileName.substring(index + 1), new File(imageFileName));
-		}
-		catch(IOException e)
-		{
+		} catch (IOException e) {
 			throw new RuntimeException("unable to save image to file:  " + imageFileName);
 		}
 	}
 
-	public void setLineColor(Color color)
-	{
+	public void setLineColor(Color color) {
 		lineColor = color;
 		repaint();
 	}
 
-	public void showMessageDialog(String message)
-	{
+	public void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message);
 	}
 
-	public String showInputDialog(String message)
-	{
+	public String showInputDialog(String message) {
 		return JOptionPane.showInputDialog(this, message);
 	}
 
-	public void close(){
+	public void close() {
 		frame.dispose();
 	}
 
-	public void fullscreen(){
+	public void fullscreen() {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	}
+
+	public void waitForClick() {
+		while (true) {
+			Location clicked = this.checkLastLocationClicked();
+			if (clicked != null) {
+				System.out.print(clicked.getRow() + clicked.getCol());
+				return;
+			} else {
+				System.out.print("NOT CLICKED");
+				Grid.pause(100);
+			}
+		}
 	}
 }
