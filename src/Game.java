@@ -159,8 +159,10 @@ public class Game {
     if (zLoc.equals(new Location(userRow, userCol + 1))) {
       // run the animoationikjl
       if (Math.random() > 0.50) {
+        if(zombie.equals("images//zombie1.gif")){
         playerAttack(zombie);
-        score++;
+        score+= 5;
+        }
       } else {
         enemyAttack(zombie);
         health--;
