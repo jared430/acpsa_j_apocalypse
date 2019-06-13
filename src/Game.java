@@ -27,6 +27,7 @@ public class Game {
   private String zPic = "images\\zombie1.gif";
   private String mtnPic = "images\\mtnDewRed.gif";
   private String[] zombies = { "images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif" };
+  private static boolean shouldGameContinue = true;
 
   // MAIN CLASS
 
@@ -61,6 +62,7 @@ public class Game {
     grid.setBackground("images\\mainBackground.png");
     grid.setMovableBackground("images\\mainBackground.png", 0, 0, 1.0, 1.0);
     grid.setImage(new Location(userRow, userCol), player);
+
     while (!isGameOver()) {
       grid.pause(100);
       handleKeyPress();
@@ -70,9 +72,10 @@ public class Game {
       }
       updateTitle();
       msElapsed += 100;
-    } else {
-      gameOverScreen();
     }
+
+    gameOverScreen();
+
   }
 
   // BOUNDARY ERRORS
@@ -242,18 +245,25 @@ public class Game {
   }
 
   private void gameOverScreen() {
+
+    grid.close();
+    backgroundMusic.pauseSound();
+
     if (health == 0) {
-    splash = new Grid(5, 10, "images\\gameOverScreenH.jpg");
-    splash.setTitle("GAME OVER");
-    splash.waitForClick();
-    splash.close();
-  } else if (getTime() < 0) {
-    splash = new Grid (5, 10, "images\\gameOverScreenT.jpg");
-    splash.setTitle("GAME OVER");
-    splash.waitForClick();
-    splash.close();
+      splash = new Grid(5, 10, "images\\gameOverScreenH.png");
+      splash.setTitle("GAME OVER");
+      splash.fullscreen();
+      splash.waitForClick();
+      splash.close();
+
+    } else if (getTime() < 0) {
+      splash = new Grid(5, 10, "images\\gameOverScreenT.png");
+      splash.setTitle("GAME OVER");
+      splash.fullscreen();
+      splash.waitForClick();
+      splash.close();
+    }
   }
-}
 
   private void attackStart(String zombie) {
     battle = new Grid(5, 5, "images\\battleBackground.png");
@@ -332,6 +342,9 @@ public class Game {
 
   public static void main(String[] args) {
     Game game = new Game();
-    game.play();
+
+    while (shouldGameContinue) {
+      game.play();
+    }
   }
 }
