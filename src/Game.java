@@ -199,23 +199,23 @@ public class Game {
   }
 
   private void splashScreen() {
-    splash = new Grid(5, 10, "images\\splashScreen.jpg");
+    splash = new Grid(5, 10, "images\\splashScreen.jpeg");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
     splash.fullscreen();
-    splash.pause(1000);
+    splash.pause(5000);
 
   }
 
   private void directionScreen() {
     splash.setBackground("images\\directionScreen.png");
     splash.setTitle("DIRECTIONS");
-    splash.pause(1000);
+    splash.pause(10000);
   }
 
   private void directionScreen2() {
     splash.setBackground("images\\directionScreen2.png");
     splash.setTitle("DIRECTIONS P.TWO");
-    splash.pause(1000);
+    splash.pause(10000);
   }
 
   private void characterSelectionScreen() {
