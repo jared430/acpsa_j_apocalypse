@@ -51,6 +51,7 @@ public class Game {
     splashScreen();
     // directions screen
     directionScreen();
+    directionScreen2();
     // character selection screen
     characterSelectionScreen();
     // main gameplay
@@ -208,6 +209,12 @@ public class Game {
   private void directionScreen() {
     splash.setBackground("images\\directionScreen.png");
     splash.setTitle("DIRECTIONS");
+    splash.pause(1000);
+  }
+
+  private void directionScreen2() {
+    splash.setBackground("images\\directionScreen2.png");
+    splash.setTitle("DIRECTIONS P.TWO");
     splash.pause(1000);
   }
 
