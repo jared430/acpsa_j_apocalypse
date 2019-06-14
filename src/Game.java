@@ -8,6 +8,7 @@ public class Game {
   private Grid characterselection;
   private Grid grid;
   private Grid battle;
+  private Grid gameOverScreen;
   private int userRow;
   private int userCol;
   private int rowLength;
@@ -26,6 +27,7 @@ public class Game {
   private String zPic = "images\\zombie1.gif";
   private String mtnPic = "images\\mtnDewRed.gif";
   private String[] zombies = { "images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif" };
+  private static boolean shouldGameContinue = true;
 
   // MAIN CLASS
 
@@ -40,8 +42,8 @@ public class Game {
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
-    health = 10;
-    time = 160000;
+    health = 3;
+    time = 10000;
     score = 0;
     updateTitle();
   }
@@ -60,6 +62,7 @@ public class Game {
     grid.setBackground("images\\mainBackground.png");
     grid.setMovableBackground("images\\mainBackground.png", 0, 0, 1.0, 1.0);
     grid.setImage(new Location(userRow, userCol), player);
+
     while (!isGameOver()) {
       grid.pause(100);
       handleKeyPress();
@@ -70,7 +73,8 @@ public class Game {
       updateTitle();
       msElapsed += 100;
     }
-    // post-game screens
+
+    gameOverScreen();
 
   }
 
@@ -78,7 +82,6 @@ public class Game {
   public void handleKeyPress() {
     int key = grid.checkLastKeyPressed();
     System.out.println(key);
-
     if (key == 38 || key == 87) { // UP
       // DON'T GO PAST THE LOCKERS
       if (userRow <= 3) {
@@ -91,9 +94,7 @@ public class Game {
       // ERASE THE OLD PLAYER IMAGE
       Location oldLoc = new Location(userRow + 1, userCol);
       grid.setImage(oldLoc, null);
-
     } else if (key == 40 || key == 83) { // DOWN
-
       if (userRow >= grid.getNumRows() - 1) {
         return;
       }
@@ -102,7 +103,6 @@ public class Game {
       grid.setImage(loc, player);
       Location oldLoc = new Location(userRow - 1, userCol);
       grid.setImage(oldLoc, null);
-
     } else if (key == 37 || key == 65) { // LEFT
       if (userCol <= 0) {
         return;
@@ -253,6 +253,25 @@ public class Game {
       }
     }
   }
+
+  private void gameOverScreen() {
+    grid.close();
+    backgroundMusic.pauseSound();
+    if (health == 0) {
+      splash = new Grid(5, 10, "images\\gameOverScreenH.png");
+      splash.setTitle("GAME OVER");
+      splash.fullscreen();
+      splash.waitForClick();
+      splash.close();
+    } else if (getTime() < 0) {
+      splash = new Grid(5, 10, "images\\gameOverScreenT.png");
+      splash.setTitle("GAME OVER");
+      splash.fullscreen();
+      splash.waitForClick();
+      splash.close();
+    }
+  }
+
   private void attackStart(String zombie) {
     battle = new Grid(5, 5, "images\\battleBackground.png");
     battle.setTitle("ZOMBIE! BLOOD! CLAWS!");
@@ -330,6 +349,8 @@ public class Game {
 
   public static void main(String[] args) {
     Game game = new Game();
-    game.play();
+    while (shouldGameContinue) {  // REPEATS GAME
+      game.play();
+    }
   }
 }
