@@ -348,8 +348,8 @@ public class Game {
   }
 
   public static void main(String[] args) {
-    Game game = new Game();
     while (shouldGameContinue) {  // REPEATS GAME
+      Game game = new Game();
       game.play();
     }
   }
