@@ -163,6 +163,13 @@ public class Game {
         playerAttack(zombie);
         score+= 5;
         }
+        else if(zombie.equals("images//zombie2.gif")){
+          playerAttack(zombie);
+          health += 5;
+        }
+        else{
+          time += 5;
+        }
       } else {
         enemyAttack(zombie);
         health--;
@@ -170,6 +177,7 @@ public class Game {
       grid.setImage(zLoc, null);
     }
   }
+  
 
   public int getTime() {
     return (time - msElapsed) / 1000;
@@ -245,7 +253,6 @@ public class Game {
       }
     }
   }
-
   private void attackStart(String zombie) {
     battle = new Grid(5, 5, "images\\battleBackground.png");
     battle.setTitle("ZOMBIE! BLOOD! CLAWS!");
