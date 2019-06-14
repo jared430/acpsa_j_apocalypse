@@ -42,7 +42,7 @@ public class Game {
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
-    health = 3;
+    health = 5;
     time = 10000;
     score = 0;
     updateTitle();
@@ -159,15 +159,13 @@ public class Game {
     if (zLoc.equals(new Location(userRow, userCol + 1))) {
       // run the animoationikjl
       if (Math.random() > 0.50) {
-        if(zombie.equals("images//zombie1.gif")){
-        playerAttack(zombie);
-        score+= 5;
-        }
-        else if(zombie.equals("images//zombie2.gif")){
+        if (zombie.equals("images\\zombie1.gif")) {
+          playerAttack(zombie);
+          score += 5;
+        } else if (zombie.equals("images\\zombie2.gif")) {
           playerAttack(zombie);
           health += 5;
-        }
-        else{
+        } else if (zombie.equals("images\\zombie3.gif")) {
           time += 5;
         }
       } else {
@@ -177,7 +175,6 @@ public class Game {
       grid.setImage(zLoc, null);
     }
   }
-  
 
   public int getTime() {
     return (time - msElapsed) / 1000;
@@ -348,7 +345,7 @@ public class Game {
   }
 
   public static void main(String[] args) {
-    while (shouldGameContinue) {  // REPEATS GAME
+    while (shouldGameContinue) { // REPEATS GAME
       Game game = new Game();
       game.play();
     }
