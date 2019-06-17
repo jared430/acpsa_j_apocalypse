@@ -26,7 +26,7 @@ public class Game {
   private String player = mPic;
   private String zPic = "images\\zombie1.gif";
   private String mtnPic = "images\\mtnDewRed.gif";
-  private String[] zombies = { "images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif" };
+  private String[] zombies = {"images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif"};
   private static boolean shouldGameContinue = true;
 
   // MAIN CLASS
@@ -73,9 +73,7 @@ public class Game {
       updateTitle();
       msElapsed += 100;
     }
-
     gameOverScreen();
-
   }
 
   // BOUNDARY ERRORS
@@ -206,20 +204,20 @@ public class Game {
   }
 
   private void splashScreen() {
-    splash = new Grid(5, 10, "images\\splashScreen.jpeg");
+    splash = new Grid(5, 10, "images\\splashScreen.png");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
     splash.fullscreen();
     splash.waitForClick();
   }
 
   private void directionScreen() {
-    splash.setBackground("images\\directionScreen.png");
+    splash.setBackground("images\\directionsScreen.png");
     splash.setTitle("DIRECTIONS");
     splash.waitForClick();
   }
 
   private void directionScreen2() {
-    splash.setBackground("images\\directionScreen2.png");
+    splash.setBackground("images\\directionsScreen2.png");
     splash.setTitle("DIRECTIONS P.TWO");
     splash.waitForClick();
   }
@@ -327,7 +325,6 @@ public class Game {
     // slash player
     battle.setImage(new Location(3, 1), playerSlash);
     battle.pause(500);
-    // add sound effect
     battle.setImage(new Location(3, 1), null);
     battle.pause(500);
     // blink player
