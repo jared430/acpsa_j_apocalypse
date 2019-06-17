@@ -26,7 +26,7 @@ public class Game {
   private String player = mPic;
   private String zPic = "images\\zombie1.gif";
   private String mtnPic = "images\\mtnDewRed.gif";
-  private String[] zombies = { "images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif" };
+  private String[] zombies = {"images\\zombie1.gif", "images\\zombie2.gif", "images\\zombie3.gif"};
   private static boolean shouldGameContinue = true;
 
   // MAIN CLASS
@@ -42,8 +42,8 @@ public class Game {
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
-    health = 3;
-    time = 30000;
+    health = 5;
+    time = 10000;
     score = 0;
     updateTitle();
   }
@@ -73,9 +73,7 @@ public class Game {
       updateTitle();
       msElapsed += 100;
     }
-
     gameOverScreen();
-
   }
 
   // BOUNDARY ERRORS
@@ -159,11 +157,15 @@ public class Game {
     if (zLoc.equals(new Location(userRow, userCol + 1))) {
       // run the animoationikjl
       if (Math.random() > 0.50) {
-        playerAttack(zombie);
-        score+= 5;
-       if(zombie.equals("images//zombie1.gif")){
-        health += 5;
-       }
+        if (zombie.equals("images\\zombie1.gif")) {
+          playerAttack(zombie);
+          score += 5;
+        } else if (zombie.equals("images\\zombie2.gif")) {
+          playerAttack(zombie);
+          health += 5;
+        } else if (zombie.equals("images\\zombie3.gif")) {
+          time += 5;
+        }
       } else {
         enemyAttack(zombie);
         health--;
@@ -171,7 +173,6 @@ public class Game {
       grid.setImage(zLoc, null);
     }
   }
-  
 
   public int getTime() {
     return (time - msElapsed) / 1000;
@@ -203,20 +204,20 @@ public class Game {
   }
 
   private void splashScreen() {
-    splash = new Grid(5, 10, "images\\splashScreen.jpeg");
+    splash = new Grid(5, 10, "images\\splashScreen.png");
     splash.setTitle("APOCALYPSE OF THE DAMNED");
     splash.fullscreen();
     splash.waitForClick();
   }
 
   private void directionScreen() {
-    splash.setBackground("images\\directionScreen.png");
+    splash.setBackground("images\\directionsScreen.png");
     splash.setTitle("DIRECTIONS");
     splash.waitForClick();
   }
 
   private void directionScreen2() {
-    splash.setBackground("images\\directionScreen2.png");
+    splash.setBackground("images\\directionsScreen2.png");
     splash.setTitle("DIRECTIONS P.TWO");
     splash.waitForClick();
   }
@@ -328,7 +329,6 @@ public class Game {
     // slash player
     battle.setImage(new Location(3, 1), playerSlash);
     battle.pause(500);
-    // add sound effect
     battle.setImage(new Location(3, 1), null);
     battle.pause(500);
     // blink player
@@ -346,8 +346,8 @@ public class Game {
   }
 
   public static void main(String[] args) {
-    Game game = new Game();
-    while (shouldGameContinue) {  // REPEATS GAME
+    while (shouldGameContinue) { // REPEATS GAME
+      Game game = new Game();
       game.play();
     }
   }
