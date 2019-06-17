@@ -43,7 +43,7 @@ public class Game {
     timesGet = 0;
     timesAvoid = 0;
     health = 3;
-    time = 10000;
+    time = 30000;
     score = 0;
     updateTitle();
   }
@@ -159,17 +159,11 @@ public class Game {
     if (zLoc.equals(new Location(userRow, userCol + 1))) {
       // run the animoationikjl
       if (Math.random() > 0.50) {
-        if(zombie.equals("images//zombie1.gif")){
         playerAttack(zombie);
         score+= 5;
-        }
-        else if(zombie.equals("images//zombie2.gif")){
-          playerAttack(zombie);
-          health += 5;
-        }
-        else{
-          time += 5;
-        }
+       if(zombie.equals("images//zombie1.gif")){
+        health += 5;
+       }
       } else {
         enemyAttack(zombie);
         health--;
@@ -311,6 +305,10 @@ public class Game {
     battle.pause(1500);
     // close screen
     battle.close();
+  }
+  public boolean attack(){
+    if()
+    return true;
   }
 
   public void enemyAttack(String zombie) {
