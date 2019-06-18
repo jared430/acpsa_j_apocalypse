@@ -44,7 +44,7 @@ public class Game {
     timesGet = 0;
     timesAvoid = 0;
     health = 5;
-    time = 10000;
+    time = 30000;
     score = 0;
     updateTitle();
   }
@@ -310,6 +310,10 @@ public class Game {
     battle.pause(1500);
     // close screen
     battle.close();
+  }
+  public boolean attack(){
+    //if()
+    return true;
   }
 
   public void enemyAttack(String zombie) {
