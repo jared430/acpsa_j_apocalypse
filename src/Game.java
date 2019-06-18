@@ -188,7 +188,7 @@ public class Game {
   }
 
   public void updateTitle() {
-    grid.setTitle("Score:  " + getScore() + " Health:  " + getHealth() + " Time:  " + getTime());
+    grid.setTitle("SCORE:  " + getScore() + " HEALTH:  " + getHealth() + " TIME:  " + getTime());
   }
 
   public boolean isGameOver() {
