@@ -18,6 +18,7 @@ public class Game {
   private int timesAvoid;
   private WavPlayer backgroundMusic;
   private String attackSound = "bin\\audio\\attackSound.wav";
+  private String deathSound = "bin\\audio\\deathSound.wav";
   private int health;
   private int time;
   private int score;
