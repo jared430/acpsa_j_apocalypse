@@ -17,7 +17,7 @@ public class Game {
   private int timesGet;
   private int timesAvoid;
   private WavPlayer backgroundMusic;
-  private WavPlayer attackSound;
+  private String attackSound = "bin\\audio\\attackSound.wav";
   private int health;
   private int time;
   private int score;
@@ -33,6 +33,7 @@ public class Game {
 
   public Game() {
     backgroundMusic = new WavPlayer("audio\\BMCTPG8BIT.wav");
+    //attackSound = new WavPlayer();
     grid = new Grid(9, 17);
     userRow = grid.getNumRows() / 2; // USER IS ALWAYS IN THE MIDDLE OF THE GRID WHEN PARAMETERS CHANGE
     userCol = 0;
@@ -297,6 +298,9 @@ public class Game {
     battle.setImage(new Location(3, 3), zombieSlash);
     battle.pause(500);
     // add sound effect
+    backgroundMusic.pauseSound();
+    WavPlayer.play(attackSound);
+    backgroundMusic.continueSound();
     battle.setImage(new Location(3, 3), null);
     battle.pause(500);
     // retreat Jereemy
@@ -325,6 +329,9 @@ public class Game {
     // slash player
     battle.setImage(new Location(3, 1), playerSlash);
     battle.pause(500);
+    backgroundMusic.pauseSound();
+    WavPlayer.play(attackSound);
+    backgroundMusic.continueSound();
     battle.setImage(new Location(3, 1), null);
     battle.pause(500);
     // blink player
