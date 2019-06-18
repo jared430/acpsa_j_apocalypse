@@ -43,7 +43,7 @@ public class Game {
     timesGet = 0;
     timesAvoid = 0;
     health = 5;
-    time = 10000;
+    time = 30000;
     score = 0;
     updateTitle();
   }
@@ -308,7 +308,7 @@ public class Game {
     battle.close();
   }
   public boolean attack(){
-    if()
+    //if()
     return true;
   }
 
